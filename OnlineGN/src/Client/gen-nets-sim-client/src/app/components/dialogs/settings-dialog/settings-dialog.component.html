@@ -1,0 +1,18 @@
+<mat-dialog-content>
+  <h2>Edit gen net settings</h2>
+  <mat-form-field class="form-field">
+    <mat-label>Step Duration (ms)</mat-label>
+    <input
+      type="number"
+      matInput
+      [min]="1000"
+      [(ngModel)]="settings.simulationSettings.stepDurationMS"
+    />
+    <span matSuffix>ms</span>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-flat-button color="primary" mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

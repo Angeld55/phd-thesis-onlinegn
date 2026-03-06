@@ -1,0 +1,81 @@
+<div class="header">
+  <h3>Edit Position</h3>
+</div>
+
+<div class="content">
+  <div class="empty-state" *ngIf="points.length === 0">
+    <p>Select a place, transition, or edge to edit its position.</p>
+  </div>
+
+  <div *ngIf="points.length > 0">
+    <div class="actions" *ngIf="elementType === 2">
+      <button mat-stroked-button color="primary" (click)="addPoint()">
+        <mat-icon>add</mat-icon> Add Point
+      </button>
+    </div>
+
+    <div
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      class="points-list"
+    >
+      <div
+        class="point-item"
+        *ngFor="let point of points; index as i; trackBy: trackByFn"
+        cdkDrag
+      >
+        <div class="drag-handle" cdkDragHandle>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+
+        <div class="coordinates">
+          <mat-form-field class="coord-input">
+            <mat-label>X</mat-label>
+            <input
+              matInput
+              type="number"
+              step="1"
+              [ngModel]="point.x"
+              (ngModelChange)="pointChanged($event, point.y, i)"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="coord-input">
+            <mat-label>Y</mat-label>
+            <input
+              matInput
+              type="number"
+              step="1"
+              [ngModel]="point.y"
+              (ngModelChange)="pointChanged(point.x, $event, i)"
+            />
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deletePoint(i)"
+          *ngIf="points.length > 2"
+          matTooltip="Remove point"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="transition-length" *ngIf="elementType === 1">
+      <mat-form-field class="full-width">
+        <mat-label>Transition Length</mat-label>
+        <input
+          matInput
+          type="number"
+          min="1"
+          step="1"
+          [ngModel]="transitionLength"
+          (ngModelChange)="transitionLengthChanged($event)"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</div>

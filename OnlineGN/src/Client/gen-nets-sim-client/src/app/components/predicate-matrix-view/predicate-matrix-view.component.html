@@ -1,0 +1,16 @@
+<table
+  *ngIf="transition"
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+  [style.width]="50 * toNames.length + 'px'"
+  [style.min-width]="50 * toNames.length + 'px'"
+>
+  <ng-container [matColumnDef]="item" *ngFor="let item of toNames">
+    <th mat-header-cell *matHeaderCellDef>{{ item }}</th>
+    <td mat-cell *matCellDef="let element">{{ element[item] }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="toNames"></tr>
+  <tr mat-row *matRowDef="let row; columns: toNames"></tr>
+</table>

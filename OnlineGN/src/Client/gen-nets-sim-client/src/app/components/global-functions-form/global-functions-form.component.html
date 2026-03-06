@@ -1,0 +1,21 @@
+<mat-form-field class="form-field">
+  <mat-label>Enter all shared functions and variables</mat-label>
+  <textarea
+    matInput
+    cdkTextareaAutosize
+    #autosize="cdkTextareaAutosize"
+    cdkAutosizeMinRows="10"
+    cdkAutosizeMaxRows="25"
+    [(ngModel)]="globalCode"
+  ></textarea>
+</mat-form-field>
+
+<button
+  mat-button
+  mat-flat-button
+  color="primary"
+  (click)="compileCode()"
+  [disabled]="!hasCode"
+>
+  Compile code
+</button>

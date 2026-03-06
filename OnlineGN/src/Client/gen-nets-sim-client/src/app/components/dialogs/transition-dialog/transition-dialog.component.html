@@ -1,0 +1,69 @@
+<mat-dialog-content class="dialog-form">
+  <h2 mat-dialog-title>Transition: {{ transition.name }}</h2>
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <input
+      type="number"
+      step="1"
+      [min]="0"
+      matInput
+      [(ngModel)]="transition.priority"
+    />
+  </mat-form-field>
+  <div class="split-function">
+    <mat-form-field>
+      <mat-label>Split function</mat-label>
+      <mat-select [(ngModel)]="transition.splitFunction">
+        <mat-option [value]="null">(reset)</mat-option>
+        <mat-option
+          *ngFor="let function of functions"
+          [value]="function.name"
+          >{{ function.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <br />
+  <button
+    mat-button
+    mat-flat-button
+    color="primary"
+    (click)="showPredicateMatrix()"
+  >
+    Predicate matrix view
+  </button>
+  <h2 mat-dialog-title>
+    Select predicate for all transitions of {{ transition.name }}
+  </h2>
+  <div *ngFor="let item of transition.data" class="container-item">
+    <div>
+      <span> From {{ item.source }} to {{ item.target }} </span>
+    </div>
+    <mat-form-field>
+      <mat-label>Predicate</mat-label>
+      <mat-select [(ngModel)]="item.predicate">
+        <mat-option [value]="null">(reset)</mat-option>
+        <mat-option
+          *ngFor="let function of functions"
+          [value]="function.name"
+          >{{ function.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Capacity</mat-label>
+      <input
+        type="number"
+        step="1"
+        [min]="0"
+        matInput
+        [(ngModel)]="item.capacity"
+      />
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-flat-button color="primary" mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

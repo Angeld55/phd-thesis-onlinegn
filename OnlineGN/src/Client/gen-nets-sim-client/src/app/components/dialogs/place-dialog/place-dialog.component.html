@@ -1,0 +1,96 @@
+<mat-dialog-content>
+  <h2 mat-dialog-title>{{ currentPlace.name }}</h2>
+  <h2 mat-dialog-title>Merge function</h2>
+  <div class="merge-function">
+    <mat-form-field>
+      <mat-label>Merge function</mat-label>
+      <mat-select [(ngModel)]="currentPlace.mergeFunction">
+        <mat-option [value]="null">(reset)</mat-option>
+        <mat-option
+          *ngFor="let function of functions"
+          [value]="function.name"
+          >{{ function.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <h2 mat-dialog-title>Place capacity</h2>
+  <mat-form-field>
+    <mat-label>Capacity</mat-label>
+    <input
+      type="number"
+      step="1"
+      [min]="0"
+      matInput
+      [(ngModel)]="currentPlace.capacity"
+    />
+  </mat-form-field>
+  <h2 mat-dialog-title>Place priority</h2>
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <input
+      type="number"
+      step="1"
+      matInput
+      [(ngModel)]="currentPlace.priority"
+    />
+  </mat-form-field>
+  <h2 mat-dialog-title>Select character function for</h2>
+
+  <mat-form-field>
+    <mat-label>Character function</mat-label>
+    <mat-select
+      [ngModel]="selectedFunction"
+      (selectionChange)="changeFunction($event.value)"
+    >
+      <mat-option [value]="undefined">(reset)</mat-option>
+      <mat-option *ngFor="let function of functions" [value]="function">{{
+        function.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="selectedFunction">
+    <mat-label>Select function code</mat-label>
+    <textarea
+      readonly="true"
+      matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="3"
+      cdkAutosizeMaxRows="10"
+      [(ngModel)]="selectedFunction.code"
+    ></textarea>
+  </mat-form-field>
+
+  <h2 mat-dialog-title>Tokens at {{ currentPlace.name }}</h2>
+
+  <div *ngIf="!tokens.length">
+    <p>No tokens found</p>
+  </div>
+  <ul *ngIf="tokens.length">
+    <li *ngFor="let token of tokens" class="token-list-item">
+      <div class="prop">
+        <label>Name:</label>
+        <span>{{ token.name }}</span>
+      </div>
+      <div class="prop">
+        <label>Position id:</label>
+        <span>{{ token.currentPositionsId }}</span>
+      </div>
+      <div class="prop">
+        <label>Priority:</label>
+        <span>{{ token.priority }}</span>
+      </div>
+      <div>
+        <label>Chars:</label>
+        <pre>{{ token.chars | json }}</pre>
+      </div>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-flat-button color="primary" mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

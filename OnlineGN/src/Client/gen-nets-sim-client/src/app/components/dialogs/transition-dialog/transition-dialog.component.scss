@@ -1,0 +1,14 @@
+.split-function {
+    border-bottom: 1px solid black;
+}
+
+.container-item {
+    border-bottom: 1px solid black;
+    span {
+        font-weight: bold;
+    }
+
+    > * {
+        display: block;
+    }
+}

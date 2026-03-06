@@ -1,0 +1,536 @@
+export function convertEdgesToML(svgString: string) {
+  const parser = new DOMParser();
+  const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+  const edgePaths = svgDoc.querySelectorAll('.edge path');
+
+  edgePaths.forEach((pathEl) => {
+    const originalD = pathEl.getAttribute('d') || '';
+    // Regex to capture coordinate pairs (x,y)
+    const coordRegex = /([+-]?\d+(?:\.\d+)?),?\s*([+-]?\d+(?:\.\d+)?)/g;
+    let match;
+    const coords = [];
+
+    while ((match = coordRegex.exec(originalD)) !== null) {
+      const x = parseFloat(match[1]);
+      const y = parseFloat(match[2]);
+      coords.push([x, y]);
+    }
+
+    if (coords.length > 0) {
+      let newD = `M ${coords[0][0]} ${coords[0][1]}`;
+      for (let i = 1; i < coords.length; i++) {
+        newD += ` L ${coords[i][0]} ${coords[i][1]}`;
+      }
+      pathEl.setAttribute('d', newD);
+    }
+  });
+
+  // Return the modified SVG as a string
+  const serializer = new XMLSerializer();
+  return serializer.serializeToString(svgDoc);
+}
+
+/**
+ * svgToTeX:
+ *   - Parses a Graphviz‐style SVG to extract places (circle) and transitions (rect/triangle).
+ *   - Forces each place circle to have radius=0.5 in the final \LaTeX\ output.
+ *   - Moves place labels closer to the circle boundary by a configurable factor.
+ *   - Shifts transition labels upward by a configurable offset so they don't overlap the triangle.
+ *   - **Scales the entire layout by 2/3** (so edges end up 2/3 their original length).
+ *   - Outputs a \LaTeX\ "picture" environment with lines, vectors, and circles.
+ *
+ * @param {string} svgString - The raw SVG content as a string.
+ * @param {number} [placeLabelOffsetFactor=0.85] - Factor to scale label offset for places.
+ * @param {number} [transitionLabelVerticalOffset=3.75] - Distance to shift transition labels upward.
+ * @param {number} [lengthScaleFactor=0.5] - Factor to scale lengths in the SVG.
+ * @param {number} [fixedPlaceRadius=5] - Fixed radius for place circles in pixels.
+ */
+export function svgToTeX(
+  svgString: string,
+  placeLabelOffsetFactor = 0.85,
+  transitionLabelVerticalOffset = 3.75,
+  lengthScaleFactor = 0.5,
+  fixedPlaceRadius = 5, // in px
+) {
+  // -----------------------
+  // CONFIG / CONSTANTS
+  // -----------------------
+  const pxToTeX = 0.1; // 1 px => 0.1 TeX units
+  //const LENGTH_SCALE_FACTOR = 2 / 3; // <-- key factor: shrink geometry to 2/3
+
+  // We want final circle radius=0.5 in TeX => diameter=1 => in raw SVG coords = 5 px
+  // so we keep forcing that in the final output:
+  //const FIXED_PLACE_RADIUS = 0.5 / pxToTeX; // 0.5 / 0.1 = 5 px
+
+  // Helper: parse path "M x y L x y..."
+  function parsePathD(pathD: string) {
+    const coordRegex = /[ML]\s*([\-\d.]+)\s*,?\s*([\-\d.]+)/g;
+    let match;
+    const coords = [];
+    while ((match = coordRegex.exec(pathD)) !== null) {
+      coords.push({ x: parseFloat(match[1]), y: parseFloat(match[2]) });
+    }
+    return coords;
+  }
+
+  // Parse the SVG as DOM
+  const parser = new DOMParser();
+  const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+  const svgEl = svgDoc.querySelector('svg');
+  if (!svgEl) {
+    console.error('Not a valid SVG input.');
+    return '';
+  }
+
+  // Possibly read global transform from g#graph0
+  let globalTranslate = { x: 0, y: 0 };
+  let globalScale = 1.0;
+  const mainG = svgDoc.querySelector('g#graph0');
+  if (mainG) {
+    const tf = mainG.getAttribute('transform') || '';
+    const tMatch = tf.match(/translate\(([^,]+),([^,]+)\)/);
+    const sMatch = tf.match(/scale\(([^)]+)\)/);
+    if (tMatch) {
+      globalTranslate.x = parseFloat(tMatch[1]);
+      globalTranslate.y = parseFloat(tMatch[2]);
+    }
+    if (sMatch) {
+      globalScale = parseFloat(sMatch[1]);
+    }
+  }
+
+  // Modified "applyGlobal" to also do the 2/3 length scaling
+  function applyGlobal(x: number, y: number) {
+    const X = x * globalScale + globalTranslate.x;
+    const Y = y * globalScale + globalTranslate.y;
+    return {
+      x: X * lengthScaleFactor,
+      y: Y * lengthScaleFactor,
+    };
+  }
+
+  // -----------------------
+  // 1) Node shapes
+  // -----------------------
+  const nodeShapes: any = {};
+
+  // Places => circle
+  const placeNodes = svgDoc.querySelectorAll('g.node.place');
+  placeNodes.forEach((g) => {
+    const titleEl = g.querySelector('title');
+    const ellEl = g.querySelector('ellipse');
+    if (!titleEl || !ellEl) return;
+
+    const name = titleEl.textContent!.trim();
+    const cx = parseFloat(ellEl.getAttribute('cx')!);
+    const cy = parseFloat(ellEl.getAttribute('cy')!);
+    const centerT = applyGlobal(cx, cy);
+
+    nodeShapes[name] = {
+      type: 'circle',
+      cx: centerT.x,
+      cy: centerT.y,
+      r: fixedPlaceRadius,
+    };
+  });
+
+  // Transitions => rect or triangle bounding
+  const transitionNodes = svgDoc.querySelectorAll('g.node.transition');
+  transitionNodes.forEach((g) => {
+    const titleEl = g.querySelector('title');
+    const polyEl = g.querySelector('polygon');
+    if (!titleEl || !polyEl) return;
+
+    const name = titleEl.textContent!.trim();
+    const coords = polyEl.getAttribute('points')!.split(/\s+/);
+    const Xs: any[] = [],
+      Ys: any[] = [];
+    coords.forEach((pt) => {
+      const [xx, yy] = pt.split(',').map(parseFloat);
+      const xyT = applyGlobal(xx, yy);
+      Xs.push(xyT.x);
+      Ys.push(xyT.y);
+    });
+    const xMin = Math.min(...Xs),
+      xMax = Math.max(...Xs);
+    const yMin = Math.min(...Ys),
+      yMax = Math.max(...Ys);
+
+    nodeShapes[name] = {
+      type: 'rect',
+      xMin,
+      xMax,
+      yMin,
+      yMax,
+    };
+  });
+
+  // -----------------------
+  // 2) Labels
+  // -----------------------
+  const places: any[] = [];
+  placeNodes.forEach((g) => {
+    const titleEl = g.querySelector('title');
+    const textEl = g.querySelector('text.node-name');
+    const ellEl = g.querySelector('ellipse');
+    if (!titleEl || !textEl || !ellEl) return;
+
+    const pName = titleEl.textContent!.trim();
+    const cx = parseFloat(ellEl.getAttribute('cx')!);
+    const cy = parseFloat(ellEl.getAttribute('cy')!);
+    const labelX = parseFloat(textEl.getAttribute('x')!);
+    const labelY = parseFloat(textEl.getAttribute('y')!);
+
+    const cT = applyGlobal(cx, cy);
+    const lT = applyGlobal(labelX, labelY);
+
+    // Move label slightly closer to the circle boundary
+    const dx = lT.x - cT.x;
+    const dy = lT.y - cT.y;
+    const newLabelX = cT.x + placeLabelOffsetFactor * dx;
+    const newLabelY = cT.y + placeLabelOffsetFactor * dy;
+
+    places.push({
+      name: pName,
+      cx: cT.x,
+      cy: cT.y,
+      labelX: newLabelX,
+      labelY: newLabelY,
+    });
+  });
+
+  const transitions: any[] = [];
+  transitionNodes.forEach((g) => {
+    const titleEl = g.querySelector('title');
+    const textEl = g.querySelector('text.transition-name');
+    const polyEl = g.querySelector('polygon');
+    if (!titleEl || !textEl || !polyEl) return;
+
+    const tName = titleEl.textContent!.trim()!;
+    const labelX = parseFloat(textEl.getAttribute('x')!);
+    const labelY = parseFloat(textEl.getAttribute('y')!);
+    const lT = applyGlobal(labelX, labelY);
+
+    // For drawing vertical line + triangle
+    const rawPts = polyEl.getAttribute('points')!.split(/\s+/);
+    const Xs: any[] = [],
+      Ys: any[] = [];
+    rawPts.forEach((pt) => {
+      const [xx, yy] = pt.split(',').map(parseFloat);
+      const xyT = applyGlobal(xx, yy);
+      Xs.push(xyT.x);
+      Ys.push(xyT.y);
+    });
+    const xMid = (Math.min(...Xs) + Math.max(...Xs)) / 2;
+    const yMin = Math.min(...Ys);
+    const yMax = Math.max(...Ys);
+
+    transitions.push({
+      name: tName,
+      // SHIFT UP so the label won't collide with the triangle
+      labelX: lT.x,
+      labelY: lT.y - transitionLabelVerticalOffset,
+      topX: xMid,
+      topY: yMin,
+      botX: xMid,
+      botY: yMax,
+    });
+  });
+
+  // -----------------------
+  // 3) Edges
+  // -----------------------
+  const edges: any[] = [];
+  const edgeNodes = svgDoc.querySelectorAll('g.edge');
+  edgeNodes.forEach((g) => {
+    let origin = '',
+      destination = '';
+
+    const classStr = g.getAttribute('class') || '';
+    const match = classStr.match(/edge\s+([\w\d]+)_{3,}([\w\d]+)/);
+    if (match) {
+      origin = match[1];
+      destination = match[2];
+    } else {
+      // fallback: parse from <title> text "A->B"
+      const titleEl = g.querySelector('title');
+      if (titleEl && titleEl.textContent!.includes('->')) {
+        const tStr = titleEl.textContent;
+        const arrowMatch = tStr!.match(/^(.*?)\s*->\s*(.*?)$/);
+        if (arrowMatch) {
+          origin = arrowMatch[1];
+          destination = arrowMatch[2];
+        }
+      }
+    }
+
+    const pathEl = g.querySelector('path');
+    if (!pathEl) return;
+    const dAttr = pathEl.getAttribute('d') || '';
+    const rawPts = parsePathD(dAttr).map((pt) => applyGlobal(pt.x, pt.y));
+
+    // arrow polygon
+    let arrowPoly: any[] = [];
+    const polyEl = g.querySelector('polygon');
+    if (polyEl) {
+      const polyPts = polyEl.getAttribute('points')!.split(/\s+/);
+      arrowPoly = polyPts.map((pt) => {
+        const [xx, yy] = pt.split(',').map(parseFloat);
+        return applyGlobal(xx, yy);
+      });
+    }
+
+    edges.push({
+      origin,
+      destination,
+      rawPoints: rawPts,
+      arrowPoly,
+    });
+  });
+
+  // -----------------------
+  // 4) Clip edges to node boundary
+  // -----------------------
+  function fixCircleBoundary(cx: number, cy: number, r: number, oldPt: any) {
+    const dx = oldPt.x - cx;
+    const dy = oldPt.y - cy;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 1e-9) dist = 1;
+    const scale = r / dist;
+    return { x: cx + scale * dx, y: cy + scale * dy };
+  }
+
+  function fixRectBoundary(
+    xMin: number,
+    xMax: number,
+    yMin: number,
+    yMax: number,
+    oldPt: any,
+    neighborPt: any,
+  ) {
+    const dx = neighborPt.x - oldPt.x;
+    const dy = neighborPt.y - oldPt.y;
+    // Decide whether to clamp horizontally or vertically
+    if (Math.abs(dx) >= Math.abs(dy)) {
+      // horizontal
+      if (dx > 0) return { x: xMax, y: oldPt.y };
+      else return { x: xMin, y: oldPt.y };
+    } else {
+      // vertical
+      if (dy > 0) return { x: oldPt.x, y: yMax };
+      else return { x: oldPt.x, y: yMin };
+    }
+  }
+
+  function fixEdgeEndpoints(e: any) {
+    const { origin, destination, rawPoints, arrowPoly } = e;
+    if (rawPoints.length < 2) return;
+
+    // fix first
+    const shapeA = nodeShapes[origin];
+    if (shapeA) {
+      const p0 = rawPoints[0];
+      const p1 = rawPoints[1];
+      if (shapeA.type === 'circle') {
+        rawPoints[0] = fixCircleBoundary(shapeA.cx, shapeA.cy, shapeA.r, p0);
+      } else {
+        rawPoints[0] = fixRectBoundary(
+          shapeA.xMin,
+          shapeA.xMax,
+          shapeA.yMin,
+          shapeA.yMax,
+          p0,
+          p1,
+        );
+      }
+    }
+
+    // fix last
+    const shapeB = nodeShapes[destination];
+    if (shapeB) {
+      const n = rawPoints.length;
+      const pLast = rawPoints[n - 1];
+      const pBefore = rawPoints[n - 2];
+      let newLast = pLast;
+      if (shapeB.type === 'circle') {
+        newLast = fixCircleBoundary(shapeB.cx, shapeB.cy, shapeB.r, pLast);
+      } else {
+        newLast = fixRectBoundary(
+          shapeB.xMin,
+          shapeB.xMax,
+          shapeB.yMin,
+          shapeB.yMax,
+          pLast,
+          pBefore,
+        );
+      }
+      rawPoints[n - 1] = newLast;
+
+      // shift arrow polygon so its tip is at the new endpoint
+      if (arrowPoly && arrowPoly.length > 0) {
+        const oldTip = arrowPoly[0];
+        const dx = newLast.x - oldTip.x;
+        const dy = newLast.y - oldTip.y;
+        for (let i = 0; i < arrowPoly.length; i++) {
+          arrowPoly[i] = {
+            x: arrowPoly[i].x + dx,
+            y: arrowPoly[i].y + dy,
+          };
+        }
+      }
+    }
+  }
+
+  edges.forEach((e) => fixEdgeEndpoints(e));
+
+  // -----------------------
+  // 5) Compute bounding box
+  // -----------------------
+  const allX = [],
+    allY = [];
+  places.forEach((p) => {
+    allX.push(p.cx, p.labelX);
+    allY.push(p.cy, p.labelY);
+  });
+  transitions.forEach((t) => {
+    allX.push(t.labelX, t.topX, t.botX);
+    allY.push(t.labelY, t.topY, t.botY);
+  });
+  edges.forEach((e) => {
+    e.rawPoints.forEach((pt: any) => {
+      allX.push(pt.x);
+      allY.push(pt.y);
+    });
+    e.arrowPoly.forEach((pt: any) => {
+      allX.push(pt.x);
+      allY.push(pt.y);
+    });
+  });
+
+  if (allX.length === 0) {
+    allX.push(0, 100);
+    allY.push(0, 100);
+  }
+  const minAllX = Math.min(...allX);
+  const maxAllX = Math.max(...allX);
+  const minAllY = Math.min(...allY);
+  const maxAllY = Math.max(...allY);
+
+  const rangeX = maxAllX - minAllX;
+  const rangeY = maxAllY - minAllY;
+
+  // Convert to TeX coords (0,0 at lower-left corner):
+  function toTeXCoords(x: number, y: number) {
+    const tx = (x - minAllX) * pxToTeX;
+    const ty = (maxAllY - y) * pxToTeX; // flip Y
+    return { x: tx, y: ty };
+  }
+
+  const picW = rangeX * pxToTeX;
+  const picH = rangeY * pxToTeX;
+
+  // -----------------------
+  // 6) Build lines in TeX
+  // -----------------------
+  function segmentsToTeX(points: any) {
+    const lines = [];
+    for (let i = 0; i < points.length - 1; i++) {
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const isLast = i === points.length - 2;
+
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const cmd = isLast ? '\\vector' : '\\line';
+
+      const prefix = `\\put(${p1.x.toFixed(2)},${p1.y.toFixed(2)})`;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        // horizontal
+        const L = Math.abs(dx).toFixed(2);
+        const dir = dx >= 0 ? 1 : -1;
+        lines.push(`${prefix}{${cmd}(${dir},0){${L}}}`);
+      } else {
+        // vertical
+        const L = Math.abs(dy).toFixed(2);
+        const dir = dy >= 0 ? 1 : -1;
+        lines.push(`${prefix}{${cmd}(0,${dir}){${L}}}`);
+      }
+    }
+    return lines.join('\n');
+  }
+
+  // -----------------------
+  // 7) Final TeX
+  // -----------------------
+  const texLines = [];
+  texLines.push('\\tiny');
+  texLines.push('\\begin{center}');
+  texLines.push('\\setlength{\\unitlength}{8pt}');
+  texLines.push(`\\begin{picture}(${picW.toFixed(2)},${picH.toFixed(2)})`);
+  texLines.push('\\linethickness{0.4pt}');
+
+  // (a) Transitions
+  texLines.push('% --- Transitions ---');
+  transitions.forEach((t) => {
+    const labelPos = toTeXCoords(t.labelX, t.labelY);
+    const topPos = toTeXCoords(t.topX, t.topY);
+    const botPos = toTeXCoords(t.botX, t.botY);
+
+    // Label (anchored bottom so it extends upward)
+    texLines.push(
+      `\\put(${labelPos.x.toFixed(2)},${labelPos.y.toFixed(2)}){\\makebox(0,0)[b]{${t.name}}}`,
+    );
+    // Triangle
+    texLines.push(
+      `\\put(${topPos.x.toFixed(2)},${topPos.y.toFixed(2)}){\\makebox(0,0)[bb]{\\Large$\\bigtriangledown$}}`,
+    );
+    // Vertical line
+    const lineLen = (topPos.y - botPos.y).toFixed(2);
+    texLines.push(
+      `\\put(${topPos.x.toFixed(2)},${topPos.y.toFixed(2)}){\\line(0,-1){${lineLen}}}`,
+    );
+  });
+
+  // (b) Places
+  texLines.push('% --- Places ---');
+  places.forEach((p) => {
+    const cPos = toTeXCoords(p.cx, p.cy);
+    const lPos = toTeXCoords(p.labelX, p.labelY);
+
+    // label
+    texLines.push(
+      `\\put(${lPos.x.toFixed(2)},${lPos.y.toFixed(2)}){\\makebox(0,0)[cc]{${p.name}}}`,
+    );
+    // circle with diameter=1 => radius=0.5
+    texLines.push(
+      `\\put(${cPos.x.toFixed(2)},${cPos.y.toFixed(2)}){\\circle{1.0}}`,
+    );
+  });
+
+  // (c) Edges
+  texLines.push('% --- Edges ---');
+  edges.forEach((e) => {
+    const { origin, destination, rawPoints } = e;
+    if (!rawPoints || rawPoints.length < 2) return;
+
+    texLines.push(`%% ${origin} -> ${destination}`);
+    const Tpoints = rawPoints.map((pt: any) => toTeXCoords(pt.x, pt.y));
+    texLines.push(segmentsToTeX(Tpoints));
+  });
+
+  texLines.push('\\end{picture}');
+  texLines.push('\\end{center}');
+  texLines.push('\\normalsize');
+
+  return texLines.join('\n');
+}
+
+// ---------------------------------------------------------------------------
+// EXAMPLE USAGE:
+//
+// const exampleSvg = `... your SVG content ...`;
+// const fixedSvg = convertEdgesToML(exampleSvg);
+// const texOutput = svgToTeX(fixedSvg, 0.80, 4.0);
+//
+// console.log(texOutput);
+//

@@ -1,0 +1,21 @@
+ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+
+.token-list-item {
+    span {
+        display: block;
+    }
+
+    label {
+        font-weight: bold;
+        margin-right: 6px;
+    }
+    > div.prop {
+        display: flex;
+    }
+
+    border-top: 3px solid #000;
+    margin-bottom: 25px;
+}

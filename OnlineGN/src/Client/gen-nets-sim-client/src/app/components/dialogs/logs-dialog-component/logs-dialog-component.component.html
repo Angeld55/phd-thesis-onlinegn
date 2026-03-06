@@ -1,0 +1,13 @@
+<mat-dialog-content>
+  <h2>Logs</h2>
+  <ol>
+    <li *ngFor="let log of logger.logs">
+      {{ log }}
+    </li>
+  </ol>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-flat-button color="primary" mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

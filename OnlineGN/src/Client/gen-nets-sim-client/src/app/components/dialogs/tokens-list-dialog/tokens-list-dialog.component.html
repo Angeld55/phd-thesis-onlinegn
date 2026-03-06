@@ -1,0 +1,37 @@
+<mat-dialog-content>
+  <h2>Current Tokens</h2>
+  <mat-form-field class="form-field">
+    <mat-label>Search by name</mat-label>
+    <input
+      type="text"
+      matInput
+      [(ngModel)]="filter"
+      (ngModelChange)="searchFilterChange($event)"
+    />
+  </mat-form-field>
+  <ul>
+    <li *ngFor="let token of filteredTokens" class="token-list-item">
+      <div class="prop">
+        <label>Name:</label>
+        <span>{{ token.name }}</span>
+      </div>
+      <div class="prop">
+        <label>Position id:</label>
+        <span>{{ token.currentPositionsId }}</span>
+      </div>
+      <div class="prop">
+        <label>Priority:</label>
+        <span>{{ token.priority }}</span>
+      </div>
+      <div>
+        <label>Chars:</label>
+        <pre>{{ token.chars | json }}</pre>
+      </div>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-flat-button color="primary" mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

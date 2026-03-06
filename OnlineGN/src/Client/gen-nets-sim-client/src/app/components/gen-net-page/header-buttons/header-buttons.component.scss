@@ -1,0 +1,37 @@
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.buttons-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  
+  /* Separator between sections */
+  &:not(:last-child)::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 24px;
+    background-color: var(--color-border);
+    margin: 0 var(--spacing-sm);
+  }
+
+  > label {
+    display: none; /* Hide labels for cleaner look, or style them as small caps */
+  }
+}
+
+/* Button Overrides if needed, though Material should handle most */
+button[mat-flat-button] {
+  /* Ensure buttons pop against the dark background */
+}
+
+.file-name {
+  font-size: 0.85rem;
+  color: var(--color-text-medium-emphasis);
+  margin-left: var(--spacing-sm);
+}
