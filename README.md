@@ -1,8 +1,4 @@
-# Software Product for the Implementation of Generalized Net Models and Its Applications
-
----
-
-# 🇧🇬 Български
+# 🇧🇬 (Български)
 
 ## Дисертационен труд
 
@@ -24,7 +20,7 @@
 
 ---
 
-# 🇬🇧 English
+# en (English)
 
 ## PhD Thesis
 
