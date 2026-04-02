@@ -1,0 +1,125 @@
+\babel@toc {bulgarian}{}\relax 
+\contentsline {section}{Introduction}{6}{section*.1}%
+\vspace {-1.0em}
+\contentsline {section}{Chapter 1. Generalized Nets: Theoretical Foundations and Simulation Software}{7}{section*.2}%
+\contentsline {subsection}{\numberline {1.1.}Notes on the Theory of Generalized Nets}{7}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.}On the Concept of a Generalized Net}{7}{subsubsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.2.}Informal Description of the Notation in Generalized Nets}{7}{subsubsection.1.1.2}%
+\contentsline {subsubsection}{\numberline {1.1.3.}Formal Definition of Generalized Nets}{8}{subsubsection.1.1.3}%
+\contentsline {subsubsection}{\numberline {1.1.4.}Algorithms for Token Movement in a Transition and in a Generalized Net}{8}{subsubsection.1.1.4}%
+\contentsline {subsection}{\numberline {1.2.}Current Software for Simulation of Generalized Nets}{8}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1.}Main Shortcomings of Current Simulators}{8}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2.}Analysis of Existing Software Solutions}{9}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3.}Main Shortcomings of Current Simulators}{9}{subsubsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.3.}Aim and Tasks of the Dissertation}{9}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1.}Formulation of the Aim}{9}{subsubsection.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.2.}Tasks for Achieving the Aim}{10}{subsubsection.1.3.2}%
+\contentsline {section}{Chapter 2. Newly Introduced Algorithms for Generalized Nets}{11}{section*.3}%
+\contentsline {subsection}{\numberline {2.1.}Algorithm for Automatic Drawing of Generalized Nets}{11}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1.}Introduction}{11}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2.}Current Practices in the Visualization of Generalized Nets}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Directionality of arrows.}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Positioning of output places.}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Places with a dual role (input and output).}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Additional practices.}{12}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3.}Drawing Graphs}{12}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4.}Modeling a Generalized Net as a Directed Graph}{12}{subsubsection.2.1.4}%
+\contentsline {paragraph}{Example.}{12}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5.}Visualization of Generalized Nets with \textit {Graphviz}}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Setting global parameters.}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Defining the vertices for transitions.}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Grouping the output places with \textit {subgraph}.}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Managing the input arcs through ``invisible'' vertices.}{13}{subsubsection.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.6.}Algorithm for Generating \textit {Graphviz} Strings from Generalized Nets}{13}{subsubsection.2.1.6}%
+\contentsline {paragraph}{Generating invisible vertices.}{14}{subsubsection.2.1.6}%
+\contentsline {paragraph}{Connecting the invisible vertices to the transitions.}{14}{algorithm.1}%
+\contentsline {paragraph}{Generating transitions.}{14}{algorithm.2}%
+\contentsline {paragraph}{Generating output places and arcs.}{15}{algorithm.3}%
+\contentsline {paragraph}{Generating outgoing arcs from the places.}{15}{algorithm.5}%
+\contentsline {paragraph}{Main function for generating a \textit {Graphviz} string.}{15}{algorithm.6}%
+\contentsline {subsection}{\numberline {2.2.}Algorithm for Converting an \textit {SVG} Image of a Generalized Net into \textit {TeX} Format}{17}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1.}Introduction and Aim of the Algorithm}{18}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.}Description of the Format of the Input \textit {SVG} File}{18}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3.}Extracting the Coordinates from the Input \textit {SVG} File}{18}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4.}Global Transformations and Normalization of Coordinates}{18}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5.}Normalization of Sizes and Labels}{19}{subsubsection.2.2.5}%
+\contentsline {paragraph}{Fixing the radius of the places.}{19}{subsubsection.2.2.5}%
+\contentsline {paragraph}{Correction of the labels of the places.}{19}{equation.2.5}%
+\contentsline {paragraph}{Correction of the labels of the transitions.}{19}{equation.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.6.}Clipping the Arcs to the Boundaries of the Elements}{20}{subsubsection.2.2.6}%
+\contentsline {paragraph}{Clipping the endpoints of arcs at places.}{20}{subsubsection.2.2.6}%
+\contentsline {paragraph}{Clipping the endpoints of the arc at transitions.}{20}{equation.2.8}%
+\contentsline {paragraph}{Preserving the correct endpoint of the arrowhead.}{20}{equation.2.11}%
+\contentsline {subsubsection}{\numberline {2.2.7.}Pseudocode of the Algorithm}{20}{subsubsection.2.2.7}%
+\contentsline {section}{Chapter 3. \textit {OnlineGN}: Simulator for Generalized-Net Models}{22}{section*.8}%
+\contentsline {subsection}{\numberline {3.1.}Requirements and Goals of the System}{22}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1.}Functional Requirements}{22}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.}Non-Functional Requirements}{22}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3.}Constraints and Assumptions of the Environment}{22}{subsubsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.2.}Architecture of the System}{23}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1.}General Architecture and Interaction Scenarios}{23}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2.}Physical/\textit {Deployment} Architecture and Cloud Infrastructure}{23}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3.}Technology Stack and External Dependencies}{23}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3.}Design and Modules of the Application}{24}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1.}Data Processing Module (\textit {GenNet Persistence})}{24}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2.}\textit {JSON} Format for Description of Generalized Nets}{24}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Root structure.}{24}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Section \texttt {genNetRaw}.}{24}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Section \textit {\texttt {settings}}.}{25}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Section \textit {\texttt {code}}.}{25}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Section \textit {\texttt {svg}}.}{25}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3.}Graphical Visualization Module (\textit {SVG/Graphviz})}{26}{subsubsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.4.}Simulation Module for the Movement of Tokens}{26}{subsubsection.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.5.}\textit {API} and Script Interface}{26}{subsubsection.3.3.5}%
+\contentsline {subsubsection}{\numberline {3.3.6.}Module for Importing and Exporting Nets}{26}{subsubsection.3.3.6}%
+\contentsline {paragraph}{Submodule \textit {Import}.}{26}{subsubsection.3.3.6}%
+\contentsline {paragraph}{Submodule \textit {Export}.}{27}{subsubsection.3.3.6}%
+\contentsline {subsubsection}{\numberline {3.3.7.}Module for Visualization of Dynamic Processes and Animation}{27}{subsubsection.3.3.7}%
+\contentsline {subsection}{\numberline {3.4.}Algorithms and Implementation Details}{27}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1.}Developed Algorithm 1: Automatic Drawing of GNs}{27}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2.}Developed Algorithm 2: Conversion of \textit {SVG} to \textit {TeX}}{27}{subsubsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.5.}Interface and User Experience}{28}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1.}Navigation and Visual Components of the Web Client}{28}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.}Help System, Documentation, and Localization}{29}{subsubsection.3.5.2}%
+\contentsline {section}{Chapter 4. Applications of Generalized Nets and the \textit {OnlineGN} Simulator}{30}{section*.12}%
+\contentsline {subsection}{\numberline {4.1.}Simulation of Finite Automata through Generalized Nets}{30}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1.}Basic Notions of Finite Automata}{30}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2.}Representation of Nondeterministic Finite Automata through Generalized Nets}{31}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3.}Detailed Example of a Nondeterministic Finite Automaton Represented as a Generalized Net}{31}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.4.}Simulation of Multiple Nondeterministic Finite Automata through a Single Generalized Net}{32}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5.}Simulation of a Single Nondeterministic Finite Automaton with the Help of \textit {OnlineGN}}{32}{subsubsection.4.1.5}%
+\contentsline {subsubsection}{\numberline {4.1.6.}Conclusion}{34}{subsubsection.4.1.6}%
+\contentsline {subsection}{\numberline {4.2.}Parallelization of the Towers of Hanoi Problem through Generalized Nets}{34}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1.}Description of the Towers of Hanoi Problem}{34}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.}{Parallelization of the Towers of Hanoi: Conceptual Overview}}{34}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3.}Configuration of the System}{34}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4.}Definition of a Parallel Step}{35}{subsubsection.4.2.4}%
+\contentsline {paragraph}{Observation (Optimality of block movements in the parallel variant of the Towers of Hanoi).}{35}{Theorem.1}%
+\contentsline {subsubsection}{\numberline {4.2.5.}Generalized-Net Model for the Parallel Towers of Hanoi}{35}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6.}Simulations with \textit {OnlineGN}}{38}{subsubsection.4.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.7.}Other Studies on Parallel Solving of Problems}{41}{subsubsection.4.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.8.}Conclusions from the Results}{41}{subsubsection.4.2.8}%
+\contentsline {subsection}{\numberline {4.3.}Generalized-Net Model of the Production of Gas and Polymeric Products in a Petroleum Refinery}{41}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1.}Introduction to the Production of Products in a Petroleum Refinery}{41}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.}Technological Scheme for the Production of Fuel Gas, LPG, Propylene, and Polypropylene in a Petroleum Refinery}{42}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3.}Main Results: Generalized-Net Model}{42}{subsubsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.4.}Remarks on the Results and the Generalized-Net Model}{44}{subsubsection.4.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.5.}Simulation with \textit {OnlineGN}}{44}{subsubsection.4.3.5}%
+\contentsline {subsubsection}{\numberline {4.3.6.}Conclusions on the Model and the Simulation}{47}{subsubsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.4.}Generalized-Net Model of the Production of Heavy Petroleum Products in a Petroleum Refinery}{47}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1.}Introduction to Generalized-Net Models for Petroleum Products in a Petroleum Refinery}{47}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2.}Processing Scheme for Production of Different Types of Heavy Fuel Oil and Road Pavement Bitumen in a Petroleum Refinery, Modeled through Generalized Nets}{48}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.3.}Results from Modeling the Production of Heavy Petroleum Products in a Petroleum Refinery with the Help of Generalized Nets}{48}{subsubsection.4.4.3}%
+\contentsline {subsubsection}{\numberline {4.4.4.}Simulation of the Model with \textit {OnlineGN}}{50}{subsubsection.4.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.5.}Results for the Model}{51}{subsubsection.4.4.5}%
+\contentsline {subsubsection}{\numberline {4.4.6.}Conclusions}{51}{subsubsection.4.4.6}%
+\contentsline {section}{Conclusion}{52}{section*.34}%
+\vspace {-1.0em}
+\contentsline {section}{Author's Reference}{53}{section*.35}%
+\contentsline {subsection}{Reference of the Contributions in the Dissertation}{53}{section*.36}%
+\contentsline {subsubsection}{Scientific Contributions}{53}{section*.36}%
+\contentsline {subsubsection}{Scientific--Applied Contributions}{53}{Item.14}%
+\contentsline {section}{Publications Related to the Dissertation}{55}{section*.37}%
+\vspace {-1.0em}
+\contentsline {section}{Bibliography}{56}{section*.38}%
+\contentsfinish 

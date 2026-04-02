@@ -1,0 +1,125 @@
+\babel@toc {bulgarian}{}\relax 
+\contentsline {section}{Увод}{6}{section*.1}%
+\vspace {-1.0em}
+\contentsline {section}{Глава 1. Обобщени мрежи: Теоретични основи и софтуер за симулации}{7}{section*.2}%
+\contentsline {subsection}{\numberline {1.1.}Бележки върху теорията на обобщените мрежи}{7}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.}За понятието обобщена мрежа}{7}{subsubsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.2.}Неформално описание на означенията в обобщените мрежи}{7}{subsubsection.1.1.2}%
+\contentsline {subsubsection}{\numberline {1.1.3.}Формална дефиниция на обобщените мрежи}{8}{subsubsection.1.1.3}%
+\contentsline {subsubsection}{\numberline {1.1.4.}Алгоритми за движение на ядрата в преход и в обобщена мрежа}{8}{subsubsection.1.1.4}%
+\contentsline {subsection}{\numberline {1.2.}Текущ софтуер за симулация на обобщени мрежи}{8}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1.}Основни недостатъци на текущите симулатори}{8}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2.}Анализ на съществуващите софтуерни решения}{9}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3.}Основни недостатъци на текущите симулатори}{9}{subsubsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.3.}Цел и задачи на дисертационния труд}{9}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1.}Формулиране на целта}{9}{subsubsection.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.2.}Задачи за постигане на целта}{10}{subsubsection.1.3.2}%
+\contentsline {section}{Глава 2. Нововъведени алгоритми за обобщени мрежи}{11}{section*.3}%
+\contentsline {subsection}{\numberline {2.1.}Алгоритъм за автоматично изчертаване на обобщени мрежи}{11}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1.}Въведение}{11}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2.}Текущи практики при визуализирането на обобщени мрежи}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Насоченост на стрелките.}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Позициониране на изходни позиции.}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Позиции с двойна роля (вход и изход).}{11}{subsubsection.2.1.2}%
+\contentsline {paragraph}{Допълнителни практики.}{11}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3.}Изчертаване на графи}{12}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4.}Моделиране на обобщена мрежа като ориентиран граф}{12}{subsubsection.2.1.4}%
+\contentsline {paragraph}{Пример.}{12}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5.}Визуализация на обобщени мрежи с \textit {Graphviz}}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Задаване на глобални параметри.}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Дефиниране на върховете за преходи.}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Групиране на изходните позиции с \textit {subgraph}.}{13}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Управление на входните ребра чрез „невидими“ върхове.}{13}{subsubsection.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.6.}Алгоритъм за генериране на \textit {Graphviz} низове от обобщени мрежи}{13}{subsubsection.2.1.6}%
+\contentsline {paragraph}{Генериране на невидими върхове.}{14}{subsubsection.2.1.6}%
+\contentsline {paragraph}{Свързване на невидимите върхове с преходите.}{14}{algorithm.1}%
+\contentsline {paragraph}{Генериране на преходи.}{14}{algorithm.2}%
+\contentsline {paragraph}{Генериране на изходни позиции и ребра.}{15}{algorithm.3}%
+\contentsline {paragraph}{Генериране на изходни ребра от позициите.}{15}{algorithm.5}%
+\contentsline {paragraph}{Главна функция за генериране на \textit {Graphviz} низ.}{15}{algorithm.6}%
+\contentsline {subsection}{\numberline {2.2.}Алгоритъм за преобразуване на \textit {SVG} изображение на обобщена мрежа в \textit {TeX} формат}{17}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1.}Въведение и цел на алгоритъма}{18}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.}Описание на формата на входния \textit {SVG} файл}{18}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3.}Извличане на координатите от входния \textit {SVG} файл}{18}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4.}Глобални трансформации и нормализация на координатите}{18}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5.}Нормализация на размери и етикети}{19}{subsubsection.2.2.5}%
+\contentsline {paragraph}{Фиксиране на радиуса на позициите.}{19}{subsubsection.2.2.5}%
+\contentsline {paragraph}{Корекция на етикетите на позициите.}{19}{equation.2.5}%
+\contentsline {paragraph}{Корекция на етикетите на преходите.}{19}{equation.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.6.}Изрязване на ребрата до границите на елементите}{20}{subsubsection.2.2.6}%
+\contentsline {paragraph}{Изрязване на крайни точки на ребра при позиции.}{20}{subsubsection.2.2.6}%
+\contentsline {paragraph}{Изрязване на крайните точки на реброто при преходи.}{20}{equation.2.8}%
+\contentsline {paragraph}{Запазване на коректния край на стрелката.}{20}{equation.2.11}%
+\contentsline {subsubsection}{\numberline {2.2.7.}Псевдокод на алгоритъма}{20}{subsubsection.2.2.7}%
+\contentsline {section}{Глава 3. \textit {OnlineGN}: Симулатор за обобщеномрежови модели}{22}{section*.8}%
+\contentsline {subsection}{\numberline {3.1.}Изисквания и цели на системата}{22}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1.}Функционални изисквания}{22}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.}Нефункционални изисквания}{22}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3.}Ограничения и предпоставки на средата}{23}{subsubsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.2.}Архитектура на системата}{23}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1.}Обща архитектура и сценарии на взаимодействие}{23}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2.}Физическа/\textit {Deployment} архитектура и облачна инфраструктура}{23}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3.}Технологичен стек и външни зависимости}{23}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3.}Дизайн и модули на приложението}{24}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1.}Модул за обработка на данните (\textit {GenNet Persistence})}{24}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2.}\textit {JSON} формат за описание на обобщени мрежи}{24}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Коренова структура.}{24}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Секция \texttt {genNetRaw}.}{25}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Секция \textit {\texttt {settings}}.}{25}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Секция \textit {\texttt {code}}.}{25}{subsubsection.3.3.2}%
+\contentsline {paragraph}{Секция \textit {\texttt {svg}}.}{26}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3.}Модул за графична визуализация (\textit {SVG/Graphviz})}{26}{subsubsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.4.}Модул за симулация на движението на ядрата}{26}{subsubsection.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.5.}\textit {API} и скриптов интерфейс}{26}{subsubsection.3.3.5}%
+\contentsline {subsubsection}{\numberline {3.3.6.}Модул за импортиране и експортиране на мрежи}{26}{subsubsection.3.3.6}%
+\contentsline {paragraph}{Подмодул \textit {Import}.}{27}{subsubsection.3.3.6}%
+\contentsline {paragraph}{Подмодул \textit {Export}.}{27}{subsubsection.3.3.6}%
+\contentsline {subsubsection}{\numberline {3.3.7.}Модул за визуализация на динамични процеси и анимация}{27}{subsubsection.3.3.7}%
+\contentsline {subsection}{\numberline {3.4.}Алгоритми и имплементационни детайли}{27}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1.}Разработен алгоритъм 1: автоматично изчертаване на ОМ}{27}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2.}Разработен алгоритъм 2: преобразуване на \textit {SVG} към \textit {TeX}}{28}{subsubsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.5.}Интерфейс и потребителско изживяване}{28}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1.}Навигация и визуални компоненти на уеб клиента}{28}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.}Помощна система, документация и локализация}{29}{subsubsection.3.5.2}%
+\contentsline {section}{Глава 4. Приложения на обобщените мрежи и симулатора \textit {OnlineGN}}{30}{section*.12}%
+\contentsline {subsection}{\numberline {4.1.}Симулация на крайни автомати чрез обобщени мрежи}{30}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1.}Основни понятия за крайни автомати}{30}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2.}Представяне на недетерминирани крайни автомати чрез обобщени мрежи}{31}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3.}Подробен пример за недетерминиран краен автомат, представен като обобщена мрежа}{31}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.4.}Симулация на множество недетерминирани крайни автомати чрез една обобщена мрежа}{32}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5.}Симулация на един недетерминиран краен автомат с помощта на \textit {OnlineGN}}{32}{subsubsection.4.1.5}%
+\contentsline {subsubsection}{\numberline {4.1.6.}Заключение}{34}{subsubsection.4.1.6}%
+\contentsline {subsection}{\numberline {4.2.}Паралелизация на задачата за Ханойските кули чрез обобщени мрежи}{34}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1.}Описание на задачата за Ханойските кули}{34}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.}{Паралелизация на Ханойските кули: Концептуален преглед}}{34}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3.}Конфигурация на системата}{34}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4.}Дефиниция на паралелна стъпка}{35}{subsubsection.4.2.4}%
+\contentsline {paragraph}{Наблюдение (Оптималност на блоковите премествания в паралелния вариант на Ханойските кули).}{35}{Theorem.1}%
+\contentsline {subsubsection}{\numberline {4.2.5.}Обобщеномрежови модел за паралелните Ханойски кули}{35}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6.}Симулации с \textit {OnlineGN}}{38}{subsubsection.4.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.7.}Други проучвания за паралелно решаване на задачи}{41}{subsubsection.4.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.8.}Изводи от резултатите}{41}{subsubsection.4.2.8}%
+\contentsline {subsection}{\numberline {4.3.}Модел с обобщена мрежа на производството на газови и полимерни продукти в нефтопреработвателна рафинерия}{41}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1.}Увод в производството на продукти в нефтопреработвателна рафинерия}{41}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.}Технологична схема за производство на газово гориво, втечнен петролен газ, пропилен и полипропилен в нефтопреработвателна рафинерия}{41}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3.}Основни резултати: обобщеномрежов модел}{42}{subsubsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.4.}Бележки по резултатите и обобщеномрежов модел}{44}{subsubsection.4.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.5.}Симулация с \textit {OnlineGN}}{44}{subsubsection.4.3.5}%
+\contentsline {subsubsection}{\numberline {4.3.6.}Изводи за модела и симулацията}{47}{subsubsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.4.}Модел с обобщена мрежа на производството на тежки нефтопродукти в нефтопреработвателна рафинерия}{47}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1.}Увод в обобщеномрежовите модели за нефтопродукти в нефтопреработвателна рафинерия}{47}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2.}Схема на преработка за производство на различни видове тежко гориво и битум за пътни настилки в нефтопреработвателна рафинерия, моделирана чрез обобщени мрежи}{48}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.3.}Резултати от моделирането на производството на тежки нефтени продукти в нефтопреработвателна рафинерия с помощта на обобщени мрежи}{48}{subsubsection.4.4.3}%
+\contentsline {subsubsection}{\numberline {4.4.4.}Симулиране на модела с \textit {OnlineGN}}{50}{subsubsection.4.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.5.}Резултати за модела}{51}{subsubsection.4.4.5}%
+\contentsline {subsubsection}{\numberline {4.4.6.}Изводи}{51}{subsubsection.4.4.6}%
+\contentsline {section}{Заключение}{52}{section*.34}%
+\vspace {-1.0em}
+\contentsline {section}{Авторска справка}{53}{section*.35}%
+\contentsline {subsection}{Справка за приносите в дисертационния труд}{53}{section*.36}%
+\contentsline {subsubsection}{Научни приноси}{53}{section*.36}%
+\contentsline {subsubsection}{Научно--приложни приноси}{53}{Item.14}%
+\contentsline {section}{Публикации по дисертационния труд}{55}{section*.37}%
+\vspace {-1.0em}
+\contentsline {section}{Библиография}{56}{section*.38}%
+\contentsfinish 

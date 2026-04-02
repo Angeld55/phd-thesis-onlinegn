@@ -16,7 +16,7 @@
 ### Дати
 
 **Предзащита:** 06 март 2026 г.  
-**Защита:** ______________________
+**Защита:** 21 май 2026 г.
 
 ---
 
@@ -38,6 +38,6 @@ Institute of Biophysics and Biomedical Engineering
 ### Dates
 
 **Pre-defense:** 06 March 2026  
-**Defense:** ______________________
+**Defense:** 21 may 2026
 
 ---

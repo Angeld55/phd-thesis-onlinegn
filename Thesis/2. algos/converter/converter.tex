@@ -1,0 +1,287 @@
+\subsection{Алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \textit{TeX} формат}
+
+\hspace*{2.5em}В този раздел се представя алгоритъм за автоматично преобразуване на \textit{SVG} изображение на ОМ в \textit{TeX} код, с което се решава~\ref{task:svg-to-tex}.
+
+\subsubsection{Въведение и цел на алгоритъма}
+\hspace*{2.5em}\textit{Scalable Vector Graphics (SVG)} е популярен векторен формат за двумерни изображения, който се мащабира без загуба на качество и е удобен за генериране и редакция \cite{SVG_F}. В академичните текстове обаче най-често се работи с \textit{TeX}, където фигурите трябва да се вписват чисто в документа и да изглеждат консистентно със шрифтовете и стила му \cite{Knuth1986TeXProgram}. Затова е необходим метод, с който пренасянето на \textit{SVG} изображение на ОМ в \textit{TeX} документ да е без ръчно пречертаване.
+
+Алгоритъмът извлича позициите, преходите и връзките от входния \textit{SVG} и създава еквивалентна чрез примитиви като \texttt{\textbackslash put}, \texttt{\textbackslash circle}, \texttt{\textbackslash line} и \texttt{\textbackslash vector}. Полученият код може директно да се вмъкне в научен документ, като се избягват ръчни корекции.
+
+В следващите раздели се описват използваният \textit{SVG} формат и предпоставките за обработка, извличането и преобразуване на координатите, изрязване на ребрата до границите на елементите и създаването на крайния \textit{TeX} резултат.
+
+
+\subsubsection{Описание на формата на входния \textit{SVG} файл}
+\hspace*{2.5em}Входният \textit{SVG} файл, с който работи алгоритъмът, следва предварително зададена структура. Всеки графичен елемент съдържа атрибут \texttt{class}, по който се определя неговият тип (позиция, преход или ребро). Стойностите на \texttt{class} могат да се генерират директно от алгоритъма за изчертаване на ОМ, описан в \textbf{Раздел \ref{sec:auto-drawing}}, и се използват като основен ориентир при обработката.
+
+В контекста на настоящата глава, както и в имплементацията на алгоритъма в новия продукт, компонентите на ОМ са описани в \textit{SVG} файла като отделни групи \texttt{<g>} в следния формат:
+
+\begin{itemize}
+	\item \textbf{\textit{Places} (позиции)}: Представени са като групи с атрибут \texttt{class} със стойност по шаблон \texttt{node place \{id\}}, където \texttt{id} е идентификаторът на позицията. В групата присъства елемент от тип \textit{ellipse} (\texttt{<ellipse>}) за визуализацията, както и елементи \textit{title} (\texttt{<title>}) и \textit{text} (\texttt{<text>}), в които е записан идентификаторът.
+	
+	\item \textbf{\textit{Transitions} (преходи)}: Представени са като групи с атрибут \texttt{class} със стойност по шаблон \texttt{node transition \{id\}}, където \texttt{id} е идентификаторът на прехода. Групата съдържа два елемента от тип \textit{polygon} (\texttt{<polygon>}): единият описва вертикалната черта на прехода, а вторият – триъгълника над нея; и двата са маркирани с \texttt{class="triangle"}. Идентификаторът се съдържа в \textit{title} и \textit{text}.
+	
+	\item \textbf{\textit{Edges} (ребра)}: Представени са като групи с атрибут \texttt{class} със стойност по шаблон \texttt{edge \{originId\}\_\_\{destinationId\}}, където \texttt{originId} и \texttt{destinationId} са идентификаторите на свързаните елементи. Групата съдържа \textit{path} (\texttt{<path>}) за точките, по които се изчерава реброто, и \textit{polygon} (\texttt{<polygon>}) за върха на стрелката.
+\end{itemize}
+
+
+\subsubsection{Извличане на координатите от входния \textit{SVG} файл}
+\hspace*{2.5em}Алгоритъмът \textbf{разчита} само координатите, нужни за построяване на фигурата в \textit{TeX}:
+
+\begin{itemize}
+  \item \textbf{\textit{Places} (позиции)}: от \texttt{<ellipse>} се взимат \texttt{cx, cy} (център), а от \texttt{<text>} -- \texttt{x, y} (позиция на етикета).
+
+  \item \textbf{\textit{Transitions} (преходи)}: разчитат се \textbf{и двата} \texttt{<polygon>} елемента (за вертикалната черта и триъгълника), както и \texttt{x, y} на етикета от \texttt{<text>}.
+
+  \item \textbf{\textit{Edges} (ребра)}: от \texttt{<path>} се взима атрибутът \texttt{d}, който е \textbf{низ със стойности} за чертане: \texttt{M x y} (\textit{move to}) задава начална точка, а \texttt{L x y} (\textit{line to}) задава следваща точка, до която се изчертава права. Така \texttt{d} се преобразува в последователност от точки \texttt{(x\_k,y\_k)}. Върхът на стрелката се разчита от \texttt{<polygon points="..."{}>} като точки \texttt{(x\_j,y\_j)}.
+\end{itemize}
+
+Накрая се прочита и \textbf{глобалната трансформация} (например \texttt{translate} и \texttt{scale}), която се прилага върху всички координати и е описана по-долу.
+\subsubsection{Глобални трансформации и нормализация на координатите}
+\hspace*{2.5em}Суровите координати, прочетени от отделните елементи, \textbf{не са достатъчни}, защото \textit{SVG} често съдържа \textbf{обща трансформация}, която се прилага върху всички елементи наведнъж. Това означава, че реалната позиция и размер на всяка точка в изображението се получават \textbf{след} глобално мащабиране и изместване. Ако тази стъпка се пропусне, резултатът в \textit{TeX} ще бъде с грешен мащаб и разположение, а връзките няма да съвпадат коректно с позициите и преходите.
+
+Типичната форма на глобалната трансформация е:
+
+\begin{center}
+	\texttt{transform="translate(tx, ty) scale(s)"}
+\end{center}
+
+Извличат се:
+\[
+\mathit{globalTranslate}_x = tx, \quad
+\mathit{globalTranslate}_y = ty, \quad
+\mathit{globalScale} = s
+\]
+
+За всяка точка \((x,\,y)\) в \textit{SVG} се прилага преобразуването в \eqref{eq:svg-transform}:
+
+\begin{equation}
+	\widehat{X} = x \cdot s + tx, \quad
+	\widehat{Y} = y \cdot s + ty
+	\label{eq:svg-transform}
+\end{equation}
+
+След това цялото изображение се намалява чрез мащабен множител, което е показано в \eqref{eq:svg-scale}. Причината е практическа: така фигурата става удобна за директно вмъкване в документ, без да се налагат допълнителни ръчни корекции на мащаба. Понеже множителят се прилага еднакво върху всички точки, пропорциите и топологията на мрежата се запазват:
+
+\begin{equation}
+	X' = \widehat{X} \cdot \underbrace{\tfrac{6}{10}}_{\text{LENGTH\_SCALE\_FACTOR}},\quad
+	Y' = \widehat{Y} \cdot \underbrace{\tfrac{6}{10}}_{\text{LENGTH\_SCALE\_FACTOR}}
+	\label{eq:svg-scale}
+\end{equation}
+
+След глобалните преобразувания се прави \textbf{нормализация} към координатната система на средата \texttt{picture} в \textit{TeX}. \texttt{picture} е вградена среда за елементарно векторно чертане, в която обектите се поставят с координати чрез \texttt{\textbackslash put(x,y)\{...\}}, а платното има фиксирани размери \texttt{\textbackslash begin\{picture\}(W,H)}.
+
+Нормализацията е необходима поради следните причини:
+\begin{itemize}[noitemsep, topsep=0pt]
+  \item (1) В \textit{TeX} координатният произход е в долния ляв ъгъл, докато при \textit{SVG} оста \(y\) расте надолу.
+  \item (2) \textit{TeX} работи най-удобно с координати, „събрани“ в рамките на платното (без отрицателни стойности).
+\end{itemize}
+
+Първо се изчислява \textbf{ограничаващ правоъгълник} (\textit{bounding box}) на всички значими точки след \eqref{eq:svg-scale}:
+\[
+X_{\min},\,X_{\max},\,Y_{\min},\,Y_{\max}.
+\]
+След това всяка точка \((X',Y')\) се преобразува към \textit{TeX} координати, както е показано в формула \eqref{eq:tex-normalization}, като едновременно се премества спрямо минималните стойности и се обръща оста \(y\):
+
+\begin{equation}
+x_{\textit{TeX}} = (X' - X_{\min})\cdot c,\qquad
+y_{\textit{TeX}} = (Y_{\max} - Y')\cdot c
+\label{eq:tex-normalization}
+\end{equation}
+
+Накрая размерите на \textit{\texttt{picture}} платното се задават спрямо обхвата, което гарантира, че цялата фигура се побира коректно. Конкретно, \(W\) и \(H\) се изчисляват според \eqref{eq:picture-dimensions}.
+
+\begin{equation}
+W = (X_{\max}-X_{\min})\cdot c,\qquad
+H = (Y_{\max}-Y_{\min})\cdot c
+\label{eq:picture-dimensions}
+\end{equation}
+
+\subsubsection{Нормализация на размери и етикети}
+\hspace*{2.5em}След преобразуването на координатите към системата на \texttt{picture} средата, е необходимо да се \textbf{уеднаквят размерите} на базовите елементи и да се \textbf{коригират позициите на етикетите}. Причината е, че входният \textit{SVG} често е създаден спрямо шрифтове и мащаб в \textit{Graphviz}, докато в \textit{TeX} реалните размери на текста и елементите са различни. Ако директно се пренесат размерите, етикетите могат да се застъпват с фигурите (особено при преходите), а различни изображения да изглеждат непоследователно.
+
+\paragraph{Фиксиране на радиуса на позициите.}
+\mbox{}\\
+За да има еднакъв визуален стил във всички генерирани схеми, радиусът на всяка позиция се фиксира до константа в \textit{TeX} координати. В имплементацията това означава, че независимо от първоначалния размер в \textit{SVG}, в резултата се използва фиксиран диаметър на окръжността:
+\begin{equation}
+\text{\texttt{\textbackslash circle\{1.0\}}} \quad \Rightarrow \quad r_{\textit{TeX}} = 0.5.
+\label{eq:fixed-place-radius}
+\end{equation}
+Така радиусът е постоянен (вж. \eqref{eq:fixed-place-radius}), което улеснява и последващото изрязване на ребрата до границата на кръга (описано в следващите стъпки на алгоритъма).
+
+\paragraph{Корекция на етикетите на позициите.}
+\mbox{}\\
+Етикетът на позиция в \textit{SVG} обикновено е поставен близо до центъра, но при прехвърляне в \textit{TeX} визуалното разстояние може да се промени. Затова етикетът се премества леко към окръжността по посоката от центъра към оригиналната му позиция. Ако \(C=(x_c,y_c)\) е центърът на позицията, а \(L=(x_l,y_l)\) е прочетената позиция на етикета, се използва:
+\begin{equation}
+L_{\textit{new}} = C + k\,(L-C),
+\label{eq:place-label-shift}
+\end{equation}
+където $k$ е коефициентът \texttt{placeLabelOffsetFactor}, който е входен за алгоритъма и може да се експериментира с него. Практически \eqref{eq:place-label-shift} приближава надписа към фигурата и намалява вероятността от припокриване с други елементи.
+
+\paragraph{Корекция на етикетите на преходите.}
+\mbox{}\\
+Преходите съдържат триъгълник и вертикална линия, а етикетът често попада твърде близо до триъгълника след преобразуване. За да се избегне визуален конфликт, етикетът на преход се измества нагоре с константно вертикално отместване (вж. \eqref{eq:transition-label-offset}).
+\begin{equation}
+y_{\textit{new}} = y_{\textit{old}} - \texttt{transitionLabelVerticalOffset}.
+\label{eq:transition-label-offset}
+\end{equation}
+Параметърът \texttt{transitionLabelVerticalOffset} също е входен за алгоритъма и може да се експериментира, за да осигурява четимост без ръчни корекции върху резултатния файл.
+
+В резултат от тези две настройки -- фиксиран радиус на позициите (вж. \eqref{eq:fixed-place-radius}) и контролирани отмествания на етикетите за позиции и преходи (вж. \eqref{eq:place-label-shift} и \eqref{eq:transition-label-offset}), резултатният \textit{TeX} код дава \textbf{четима} визуализация на тези елементи.
+
+\subsubsection{Изрязване на ребрата до границите на елементите}
+\hspace*{2.5em}След нормализацията на координатите и фиксирането на размерите, остава ключов практически проблем: ребрата, прочетени от \texttt{<path>}, често започват и завършват \textbf{вътре} в съответния елемент (позиция или преход). Ако тези крайни точки се пренесат директно в \textit{TeX}, линиите ще навлизат в окръжността на позицията или ще пресичат графиката на прехода, което влошава четимостта. Затова алгоритъмът \textbf{изрязва крайните точки} на всяко ребро така, че те да попаднат точно върху \textbf{границата} на свързаните елементи.
+
+Реброто се представя като последователност от точки
+\((p_0, p_1, \dots, p_{n-1})\), получени от стойностите \texttt{M} и \texttt{L} в атрибута \texttt{d}.
+Корекцията се прави \textbf{само} за двата края:
+\begin{itemize}
+  \item началната точка \(p_0\) се премества до границата на \textbf{изходния} елемент, като се използва посоката към \(p_1\);
+  \item крайната точка \(p_{n-1}\) се премества до границата на \textbf{входния} елемент, като се използва посоката от \(p_{n-2}\) към \(p_{n-1}\).
+\end{itemize}
+
+\paragraph{Изрязване на крайни точки на ребра при позиции.}
+\mbox{}\\
+Позициите се чертаят като окръжности с фиксиран радиус \(r_{\textit{TeX}}\) (вж. \eqref{eq:fixed-place-radius}), което позволява прост и стабилен метод. Ако \(C=(x_c,y_c)\) е центърът на позицията, а \(P=(x_p,y_p)\) е крайна точка на реброто (преди корекцията), новата точка \(P'\) се получава чрез нормализиране по посоката \(C \rightarrow P\), както е показано във формула \eqref{eq:clip-circle}:
+\begin{equation}
+P' = C + r \cdot \frac{(P - C)}{\lVert P - C \rVert}.
+\label{eq:clip-circle}
+\end{equation}
+Така реброто приключва точно на окръжността, независимо откъде идва.
+
+\paragraph{Изрязване на крайните точки на реброто при преходи.}
+\mbox{}\\
+Преходите са описани в \textit{SVG} чрез многоъгълници (\textit{polygons}), но за целите на изрязването се коригира \textbf{началната или крайната точка на реброто}, така че да попадне върху границата на прехода, приближена чрез ограничаващ правоъгълник
+\([x_{\min},x_{\max}] \times [y_{\min},y_{\max}]\).
+Тук има значение дали преходът е \textbf{в началото} или \textbf{в края} на реброто, защото посоката се определя от различен съседен сегмент: при изрязване в началото се използват \(P=p_0\) и \(Q=p_1\), а при изрязване в края: \(P=p_{n-1}\) и \(Q=p_{n-2}\).
+
+Нека \(P=(x_p,y_p)\) е точката, която ще се коригира, а \(Q=(x_q,y_q)\) е съседната ѝ точка по реброто. Разликите по координати се дефинират с формула \eqref{eq:deltas}:
+\begin{equation}
+\Delta x = x_q - x_p,\qquad \Delta y = y_q - y_p.
+\label{eq:deltas}
+\end{equation}
+
+За да се избере правилната страна на правоъгълника, се използва сравнението в \eqref{eq:dominant-dir}. Ако \(|\Delta x|\) е по-голямо или равно на \(|\Delta y|\), сегментът се приема за \textbf{хоризонтален} (движението е основно наляво/надясно), а иначе -- за \textbf{вертикален} (движението е основно нагоре/надолу):
+\begin{equation}
+\text{хоризонтален, ако } |\Delta x| \ge |\Delta y|,\qquad
+\text{вертикален, ако } |\Delta y| > |\Delta x|.
+\label{eq:dominant-dir}
+\end{equation}
+
+След като се определи посоката, точката се поставя на съответната страна на ограничителния правоъгълник. Изборът на страна зависи от знака на \(\Delta x\) или \(\Delta y\), както е обобщено във формула \eqref{eq:rect-clip}:
+\begin{equation}
+P'=
+\begin{cases}
+(x_{\max},\,y_p), & \text{ако } |\Delta x|\ge|\Delta y| \text{ и } \Delta x>0,\\
+(x_{\min},\,y_p), & \text{ако } |\Delta x|\ge|\Delta y| \text{ и } \Delta x<0,\\
+(x_p,\,y_{\max}), & \text{ако } |\Delta y|>|\Delta x| \text{ и } \Delta y>0,\\
+(x_p,\,y_{\min}), & \text{ако } |\Delta y|>|\Delta x| \text{ и } \Delta y<0.
+\end{cases}
+\label{eq:rect-clip}
+\end{equation}
+
+По този начин реброто докосва прехода естествено (отляво/отдясно или отгоре/отдолу), без да преминава през него.
+
+\paragraph{Запазване на коректния край на стрелката.}
+\mbox{}\\
+След като крайната точка на реброто се премести до границата на входния елемент, последният сегмент се генерира като \texttt{\textbackslash vector}, така че върхът на стрелката да съвпада с новата крайна точка. В резултат ребрата не навлизат в елементите и визуалната посока се запазва коректно в \textit{TeX} фигурата.
+
+\subsubsection{Псевдокод на алгоритъма}
+
+\hspace*{2.5em}В по-общ вид стъпките могат да се синтезират, както следва, като дефинираните константи са с примерни стойности, получени при успешно прилагане на алгоритъма върху реални изображения:
+\begin{verbatim}
+function svgToTeX(svgString):
+  1) DOM = parse SVG string into an XML DOM object
+  2) mainG = find <g id="graph0"> and parse 
+  	 transform="translate(tx, ty) scale(s)"
+       globalTranslate = (tx, ty)
+       globalScale = s
+  3) Define LENGTH_SCALE_FACTOR = 0.6   # (2/3) shrink
+  4) Define pxToTeX = 0.1              # 1px -> 0.1 TeX units
+
+  # 5) Identify PLACES
+  for each g with class="node place":
+    read ellipse(cx, cy)
+    apply global transform + LENGTH_SCALE_FACTOR => (x', y')
+    store nodeShapes[placeName] = circle with center=(x', y') 
+    and forced radius=5px
+
+  # 6) Identify TRANSITIONS
+  for each g with class="node transition":
+    read polygon points => bounding box => xMin, xMax, yMin, yMax
+    apply transform => store nodeShapes[transitionName] = rect
+
+  # 7) Capture LABELS for places and transitions
+  for each place:
+    read original label coords => (lx, ly)
+    apply transform => (lx', ly')
+    offset label => (lx'', ly'') = (cx', cy') 
+    				+ alpha*(lx'-cx', ly'-cy')
+  for each transition:
+    shift label upward => labelY' = labelY - someVerticalOffset
+
+  # 8) Identify EDGES
+  for each g with class="edge":
+    read origin, destination from class or <title> text
+    parse path (M x0 y0 L x1 y1 ...)
+    apply transform => rawPoints
+    # arrow polygon => transform as well
+
+  # 9) CLIP edge endpoints
+  for first and last rawPoints:
+    if shapes[origin] == circle => move boundary
+    if shapes[destination] == rect => clamp to bounding box
+    (similarly for the other end)
+
+  # 10) Compute bounding box over all x' and y'
+  xMinAll, xMaxAll, yMinAll, yMaxAll
+
+  # 11) Convert to TeX coords => (x_T, y_T)
+     x_T = (x' - xMinAll)*pxToTeX
+     y_T = (yMaxAll - y')*pxToTeX
+
+  # 12) Build a \begin{picture}(width, height) with lines for edges,
+      circles for places, etc.
+
+  return final TeX code as a string
+\end{verbatim}
+
+
+След изпълнението на тези стъпки се генерира \textit{TeX} фрагмент, който може директно да се вмъкне в научен документ, в съответствие с приетата конвенция за изчертаване на ОМ.
+
+\subsubsection{Пример за резултат от алгоритъма в \textit{TeX} формат}
+\hspace*{2.5em}След приключване на всички преобразувания резултатът най-често се поставя във вътрешността на \texttt{\textbackslash begin\{picture\}} ... \texttt{\textbackslash end\{picture\}} блок. Примерен фрагмент:
+\begin{verbatim}
+\tiny
+\begin{center}
+\setlength{\unitlength}{8pt}
+\begin{picture}(width,height)
+  \linethickness{0.4pt}
+
+  % --- Places ---
+  \put(10.00,12.00){\makebox(0,0)[cc]{p1}}
+  \put(10.00,12.00){\circle{1.0}}
+
+  % --- Transition ---
+  \put(15.00,20.00){\makebox(0,0)[b]{Z1}}
+  \put(15.00,25.00){\makebox(0,0)[bb]{\Large$\bigtriangledown$}}
+  \put(15.00,25.00){\line(0,-1){10.00}}
+
+  % --- Edge ---
+  % p1 -> Z1
+  \put(11.00,12.00){\line(1,0){4.00}}
+  \put(15.00,12.00){\vector(1,0){1.00}}
+
+\end{picture}
+\end{center}
+\normalsize
+\end{verbatim}
+
+\noindent Тук:
+\begin{itemize}
+  \item \texttt{\string\put(x,\,y)\{...\}} задава мястото (в \textit{TeX} мерни единици, които зависят от \texttt{\string\unitlength}), където да се постави даден обект.
+  \item \texttt{\textbackslash circle\{1.0\}} чертае окръжност с диаметър 1.0 (което съответства на радиус 0.5).
+  \item \texttt{\textbackslash line(0,-1)\{10.00\}} рисува линия с дължина 10 (по вертикала, надолу).
+  \item \texttt{\textbackslash vector(1,0)\{...\}} чертае линия със стрелка, която се използва за последния сегмент от реброто.
+  \item \texttt{\{p1\}} поставя текст, центриран хоризонтално и вертикално.
+
+\end{itemize}

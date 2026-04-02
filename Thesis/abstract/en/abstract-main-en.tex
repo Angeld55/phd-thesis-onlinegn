@@ -1,0 +1,216 @@
+\documentclass[a4paper,12pt]{article}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage[margin=2.7cm]{geometry} % try 1.5–2.0 cm to taste
+
+\usepackage{cmap}
+% \usepackage[utf8]{inputenc}
+% \usepackage[T2A]{fontenc}
+% \usepackage{lmodern} 
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[main=bulgarian, english]{babel}
+\addto\captionsbulgarian{
+	\renewcommand{\refname}{Bibliography}
+}
+
+
+\pretolerance=150
+\tolerance=1000
+\emergencystretch=2em 
+\hbadness=10000
+\sloppy 
+
+% \usepackage[expansion=false]{microtype}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage[unicode,colorlinks,urlcolor=black,citecolor=black,linkcolor=black]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+\usepackage{titletoc}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{soul}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{changepage} 
+\usepackage{siunitx}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{xcolor}   
+\usepackage{minted}
+\usepackage{ragged2e}
+\usepackage{acronym}
+
+\usepackage{rotating}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{xr-hyper}
+\hypersetup{hidelinks}
+
+\externaldocument[DIS-]{../../dissertation-main-bg}
+
+
+%\usepackage{refcheck} ref checking
+
+\newtheorem{Theorem}{Theorem} 
+
+\usepackage[figurename=Figure]{caption}
+\captionsetup[figure]{
+	justification=centering,
+	singlelinecheck=false,
+	font=it
+}
+\captionsetup{labelfont=bf}
+\DeclareCaptionLabelSeparator{dash}{\;-\;}
+\captionsetup{labelsep=dash}
+
+\floatname{algorithm}{Algorithm}
+\usepackage{hyphenat} %for word transfer
+\usepackage{pgfplots}
+\usepackage{changepage} % дава средата adjustwidth
+\newlength{\extralength}
+
+\setlength{\parindent}{2.5em}
+\setlength{\parskip}{0.5em}
+
+%\overfullrule=5pt за квадратчета за излизане от реда
+
+\captionsetup[table]{name=Таблица}
+
+\acrodef{DOT}{Graphviz DOT language}
+\acrodef{SVG}{Scalable Vector Graphics}
+
+
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X} % ляво подравнен X
+\newcolumntype{C}{>{\centering\arraybackslash}X}   % центриран X
+
+
+\newcommand{\kv}{
+	\unitlength 1.00mm
+	\linethickness{0.4pt}
+	\begin{picture}(4.0,4.0)
+		\put(1.00,0.00){\line(0,1){2.00}}
+		\put(1.00,2.00){\line(1,0){2.00}}
+		\put(3.00,2.00){\line(0,-1){2.00}}
+		\put(3.00,0.00){\line(-1,0){2.00}}
+\end{picture}}
+
+\newcommand{\spa}{\mbox{   }}
+
+
+% Общ стил
+% \lstset{
+	%   basicstyle=\ttfamily\small,
+	%   numbers=left,
+	%   numberstyle=\tiny,
+	%   stepnumber=1,
+	%   showstringspaces=false,
+	%   breaklines=true,
+	%   tabsize=2
+	% }
+
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+	keywords={break,case,catch,continue,debugger,default,delete,do,else,false,finally,for,function,if,in,instanceof,new,null,return,switch,this,throw,true,try,typeof,var,void,while,with,let,const,await,async,class,extends,super,import,from,export,as,yield},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	morestring=[b]`,
+}
+
+% TypeScript (надгражда JS)
+\lstdefinelanguage{TypeScript}[]{JavaScript}{
+	morekeywords={interface,implements,enum,private,protected,public,readonly,abstract,type,namespace,declare},
+}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{\scalebox{0.5}{$\blacksquare$}}
+
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	showstringspaces=false,
+	breaklines=true,
+	columns=fixed,
+	tabsize=2,
+	frame=single,
+	rulecolor=\color{black},
+	backgroundcolor=\color{gray!10},
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{green!50!black}\itshape,
+	stringstyle=\color{red!70!black},
+	captionpos=b,
+	aboveskip=1em,
+	belowskip=1em,
+	framesep=3mm,
+	xleftmargin=15pt, 
+	numbersep=12pt,
+}
+
+
+% chapters counter
+\newcounter{realchapter}
+\setcounter{realchapter}{0}
+
+\newcommand{\mysection}[1]{
+	\clearpage
+	\stepcounter{realchapter}
+	
+	\setcounter{section}{\therealchapter}
+	\setcounter{subsection}{0}
+	\setcounter{subsubsection}{0}
+	
+	\renewcommand{\thesection}{\therealchapter}
+	
+	\phantomsection
+	\section*{Chapter \therealchapter. #1}
+	\addcontentsline{toc}{section}{Chapter \therealchapter. #1}
+}
+
+
+
+\renewcommand{\thesubsection}{\therealchapter.\arabic{subsection}.}
+\renewcommand{\thesubsubsection}{\therealchapter.\arabic{subsection}.\arabic{subsubsection}.}
+
+\usepackage{titlesec}
+
+
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection} 
+{1em}
+{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection}
+{1em}
+{}
+
+\begin{document}
+	\emergencystretch=1.5em
+
+	\input{titlepage.tex}
+	\input{abstract-content-en.tex}
+	\input{bibitems.tex}
+	
+\end{document}

@@ -1,0 +1,280 @@
+\documentclass[a4paper,12pt]{article}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage[margin=2.7cm]{geometry} % try 1.5–2.0 cm to taste
+
+\usepackage{cmap}
+% \usepackage[utf8]{inputenc}
+% \usepackage[T2A]{fontenc}
+% \usepackage{lmodern} 
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[main=bulgarian, english]{babel}
+\babelprovide[hyphenrules=bulgarian]{bulgarian}
+
+\hyphenation{
+	функ-ци-и-те
+	кон-фликт-ни
+	ед-но-вре-мен-но
+	ко-рект-ност-та
+	де-фи-ни-ци-я-та
+	въз-при-е-ма-не
+	изоб-ра-же-ние
+	раз-ра-бот-ва-не-то
+	ок-ръж-нос-ти
+	съ-от-вет-ни-я
+	кон-тро-ли-ра-ни
+	ко-и-то
+	дейст-ви-е-то
+	свърз-ва-не
+	из-полз-ва
+	функ-ци-я-та
+	не-кон-тро-ли-ра-но
+	съ-сто-я-ние
+	неф-то-пре-ра-бот-ва-тел-на
+	впо-след-ствие
+	след-ствие
+	произ-вод-ство-то
+	въг-ле-во-до-род-ни
+	неф-то-про-дук-ти
+	ха-рак-те-рис-ти-ка-та
+	сът-руд-ни-че-ство-то
+	ди-рект-но
+	кон-тро-ли-ра-ни
+	са-мо-про-вер-ка-та
+}
+
+\addto\captionsbulgarian{
+	\renewcommand{\refname}{Библиография}
+}
+
+\pretolerance=150
+\tolerance=1500
+\emergencystretch=2em
+\hbadness=10000
+\hyphenpenalty=600  
+\doublehyphendemerits=10000 
+\finalhyphendemerits=5000   
+
+% \usepackage[expansion=false]{microtype}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage[unicode,colorlinks,urlcolor=black,citecolor=black,linkcolor=black]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+\usepackage{titletoc}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{soul}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{changepage} 
+\usepackage{siunitx}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{xcolor}   
+\usepackage{minted}
+\usepackage{ragged2e}
+\usepackage{acronym}
+
+\usepackage{rotating}
+\usepackage{booktabs}
+\usepackage{array}
+
+\usepackage{cite}
+\usepackage{soul}
+
+
+%\usepackage{refcheck}
+
+\newtheorem{Theorem}{Теорема} 
+\newtheorem{Observation}{Наблюдение} 
+
+
+\usepackage[figurename=Фигура]{caption}
+\captionsetup[figure]{
+    justification=centering,
+    singlelinecheck=false,
+    font=it
+}
+\captionsetup{labelfont=bf}
+\DeclareCaptionLabelSeparator{dash}{\;-\;}
+\captionsetup{labelsep=dash}
+
+\captionsetup[lstlisting]{
+	font={it},        
+	labelfont={bf,it}, 
+	textfont={it},
+	labelsep=dash, 
+	justification=centering,
+	singlelinecheck=false,
+	width=0.95\linewidth
+}
+
+
+\floatname{algorithm}{Алгоритъм}
+% \usepackage{hyphenat} %for word transfer
+\usepackage{pgfplots}
+\usepackage{changepage} % дава средата adjustwidth
+\newlength{\extralength}
+
+\setlength{\parindent}{2.5em}
+\setlength{\parskip}{0.5em}
+
+%\overfullrule=5pt за квадратчета за излизане от реда
+
+\captionsetup[table]{name=Таблица}
+
+\acrodef{DOT}{Graphviz DOT language}
+\acrodef{SVG}{Scalable Vector Graphics}
+
+
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X} % ляво подравнен X
+\newcolumntype{C}{>{\centering\arraybackslash}X}   % центриран X
+
+
+\newcommand{\kv}{
+\unitlength 1.00mm
+\linethickness{0.4pt}
+\begin{picture}(4.0,4.0)
+\put(1.00,0.00){\line(0,1){2.00}}
+\put(1.00,2.00){\line(1,0){2.00}}
+\put(3.00,2.00){\line(0,-1){2.00}}
+\put(3.00,0.00){\line(-1,0){2.00}}
+\end{picture}}
+
+\newcommand{\spa}{\mbox{   }}
+
+
+% Общ стил
+% \lstset{
+%   basicstyle=\ttfamily\small,
+%   numbers=left,
+%   numberstyle=\tiny,
+%   stepnumber=1,
+%   showstringspaces=false,
+%   breaklines=true,
+%   tabsize=2
+% }
+
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+  keywords={break,case,catch,continue,debugger,default,delete,do,else,false,finally,for,function,if,in,instanceof,new,null,return,switch,this,throw,true,try,typeof,var,void,while,with,let,const,await,async,class,extends,super,import,from,export,as,yield},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`,
+}
+
+% TypeScript (надгражда JS)
+\lstdefinelanguage{TypeScript}[]{JavaScript}{
+  morekeywords={interface,implements,enum,private,protected,public,readonly,abstract,type,namespace,declare},
+}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{\scalebox{0.5}{$\blacksquare$}}
+
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    showstringspaces=false,
+    breaklines=true,
+    columns=fixed,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{black},
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!70!black},
+    captionpos=b,
+    aboveskip=1em,
+    belowskip=1em,
+    framesep=3mm,
+    xleftmargin=15pt, 
+    numbersep=12pt,
+}
+
+
+% chapters counter
+\newcounter{realchapter}
+\setcounter{realchapter}{0}
+
+\newcommand{\mysection}[1]{
+	\clearpage
+	\stepcounter{realchapter}
+	
+	\setcounter{section}{\therealchapter}
+	\setcounter{subsection}{0}
+	\setcounter{subsubsection}{0}
+	
+	\renewcommand{\thesection}{\therealchapter}
+	
+	\phantomsection
+	\section*{Глава \therealchapter. #1}
+	\addcontentsline{toc}{section}{Глава \therealchapter. #1}
+}
+
+
+
+\renewcommand{\thesubsection}{\therealchapter.\arabic{subsection}.}
+\renewcommand{\thesubsubsection}{\therealchapter.\arabic{subsection}.\arabic{subsubsection}.}
+
+\renewcommand{\lstlistingname}{Фрагмент от код}
+
+\usepackage{titlesec}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection} 
+{1em}
+{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection}
+{1em}
+{}
+
+\begin{document}
+\emergencystretch=1.5em
+
+
+\lefthyphenmin=2   
+\righthyphenmin=2  
+\emergencystretch=1.5em
+
+\input{titlepage.tex} 
+
+\newpage
+
+\input{intro.tex}
+
+\input{1. introduction/introduction.tex}
+\input{2. algos/algorithms.tex}
+\input{3. onlineGn/simulator.tex}
+\input{4. applications/applications.tex}
+
+\input{conclusion.tex}
+\input{contributions.tex}
+\input{publications.tex}
+\input{bibitems.tex}
+\input{declaration.tex}
+
+\end{document}

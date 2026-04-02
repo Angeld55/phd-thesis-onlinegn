@@ -1,0 +1,237 @@
+{
+  "genNetRaw": {
+    "places": [
+      {
+        "id": "pstart",
+        "name": "pstart",
+        "charFunc": null,
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p12",
+        "name": "p12",
+        "charFunc": "consumeFirstSymbol",
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p23",
+        "name": "p23",
+        "charFunc": "consumeFirstSymbol",
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p24",
+        "name": "p24",
+        "charFunc": "consumeFirstSymbol",
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p32",
+        "name": "p32",
+        "charFunc": "consumeFirstSymbol",
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p44",
+        "name": "p44",
+        "charFunc": "consumeFirstSymbol",
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p45",
+        "name": "p45",
+        "charFunc": "consumeFirstSymbol",
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p3fin",
+        "name": "p3fin",
+        "charFunc": null,
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "p5fin",
+        "name": "p5fin",
+        "charFunc": null,
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      },
+      {
+        "id": "pfin",
+        "name": "pfin",
+        "charFunc": null,
+        "mergeFunction": null,
+        "priority": 1,
+        "capacity": 1
+      }
+    ],
+    "transitions": [
+      {
+        "id": "Z1",
+        "name": "Z_1",
+        "splitFunction": null,
+        "data": [
+          {
+            "source": "pstart",
+            "target": "p12",
+            "predicate": "firstSymbolIsA",
+            "capacity": 1
+          }
+        ],
+        "priority": 1
+      },
+      {
+        "id": "Z2",
+        "name": "Z_2",
+        "splitFunction": "splitOnZ2",
+        "data": [
+          {
+            "source": "p12",
+            "target": "p23",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          },
+          {
+            "source": "p12",
+            "target": "p24",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          },
+          {
+            "source": "p32",
+            "target": "p23",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          },
+          {
+            "source": "p32",
+            "target": "p24",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          }
+        ],
+        "priority": 1
+      },
+      {
+        "id": "Z3",
+        "name": "Z_3",
+        "splitFunction": null,
+        "data": [
+          {
+            "source": "p23",
+            "target": "p32",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          },
+          {
+            "source": "p23",
+            "target": "p3fin",
+            "predicate": "wordIsEmpty",
+            "capacity": 1
+          }
+        ],
+        "priority": 1
+      },
+      {
+        "id": "Z4",
+        "name": "Z_4",
+        "splitFunction": null,
+        "data": [
+          {
+            "source": "p24",
+            "target": "p44",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          },
+          {
+            "source": "p24",
+            "target": "p45",
+            "predicate": "firstSymbolIsA",
+            "capacity": 1
+          },
+          {
+            "source": "p44",
+            "target": "p44",
+            "predicate": "firstSymbolIsB",
+            "capacity": 1
+          },
+          {
+            "source": "p44",
+            "target": "p45",
+            "predicate": "firstSymbolIsA",
+            "capacity": 1
+          }
+        ],
+        "priority": 1
+      },
+      {
+        "id": "Z5",
+        "name": "Z_5",
+        "splitFunction": null,
+        "data": [
+          {
+            "source": "p45",
+            "target": "p5fin",
+            "predicate": "wordIsEmpty",
+            "capacity": 1
+          }
+        ],
+        "priority": 1
+      },
+      {
+        "id": "Zfincl",
+        "name": "Z_fincl",
+        "splitFunction": null,
+        "data": [
+          {
+            "source": "p3fin",
+            "target": "pfin",
+            "predicate": "returnTrue",
+            "capacity": 1
+          },
+          {
+            "source": "p5fin",
+            "target": "pfin",
+            "predicate": "returnTrue",
+            "capacity": 1
+          }
+        ],
+        "priority": 1
+      }
+    ],
+    "tokens": [
+      {
+        "id": "token1",
+        "name": "token_1",
+        "host": "pstart",
+        "initialChars": {
+          "word": "abbba"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "simulationSettings": {
+      "stepDurationMS": 5000
+    }
+  },
+  "code": "this.globalObj = { tokens: this.tokenMover.tokens, getTokenByName: function (name) { return this.tokens.find((token) => token.name === name); }, returnTrue: function () { return true; }, firstSymbolIsA: function (token) { const word = token && token.chars && typeof token.chars.word === 'string' ? token.chars.word : ''; return word.length > 0 && word[0] === 'a'; }, firstSymbolIsB: function (token) { const word = token && token.chars && typeof token.chars.word === 'string' ? token.chars.word : ''; return word.length > 0 && word[0] === 'b'; }, wordIsEmpty: function (token) { const word = token && token.chars && typeof token.chars.word === 'string' ? token.chars.word : ''; return word.length === 0; }, consumeFirstSymbol: function (token) { const word = token && token.chars && typeof token.chars.word === 'string' ? token.chars.word : ''; if (word.length > 0) { token.chars.word = word.substring(1); } }, splitOnZ2: function (token) { return true; } }",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"100%\" height=\"500px\" viewBox=\"0.00 0.00 702.20 396.00\" style=\"border: 2px solid black;\">\n<g id=\"graph0\" class=\"graph\" transform=\"translate(349.2434705919869,330.18017922463474) scale(0.5946035575013618)\">\n<title>G</title>\n<polygon fill=\"white\" stroke=\"none\" points=\"-4,4 -4,-392 698.2,-392 698.2,4 -4,4\"></polygon>\n<g id=\"clust1\" class=\"cluster\">\n<title>cluster_Z1</title>\n</g>\n<g id=\"clust2\" class=\"cluster\">\n<title>cluster_Z1_0</title>\n</g>\n<g id=\"clust4\" class=\"cluster\">\n<title>cluster_Z2</title>\n</g>\n<g id=\"clust5\" class=\"cluster\">\n<title>cluster_Z2_0</title>\n</g>\n<g id=\"clust7\" class=\"cluster\">\n<title>cluster_Z4</title>\n</g>\n<g id=\"clust8\" class=\"cluster\">\n<title>cluster_Z4_0</title>\n</g>\n<g id=\"clust10\" class=\"cluster\">\n<title>cluster_Z5</title>\n</g>\n<g id=\"clust11\" class=\"cluster\">\n<title>cluster_Z5_0</title>\n</g>\n<g id=\"clust13\" class=\"cluster\">\n<title>cluster_Zfincl</title>\n</g>\n<g id=\"clust14\" class=\"cluster\">\n<title>cluster_Zfincl_0</title>\n</g>\n<g id=\"clust16\" class=\"cluster\">\n<title>cluster_Z3</title>\n</g>\n<g id=\"clust17\" class=\"cluster\">\n<title>cluster_Z3_0</title>\n</g>\n<!-- Z1 -->\n<g id=\"node1\" class=\"node transition Z1\">\n<title>Z1</title>\n<polygon fill=\"none\" stroke=\"black\" points=\"95.04,-390 94.32,-390 94.32,-318 95.04,-318 95.04,-390\"></polygon>\n<text x=\"94.32\" y=\"-400\" class=\"transition-name\" text-anchor=\"middle\" font-size=\"10px\">Z1</text><polygon class=\"triangle\" points=\"94.66999999999999,-390 87.16999999999999,-397.5 102.16999999999999,-397.5\"></polygon></g>\n<!-- p12 -->\n<g id=\"node3\" class=\"node place p12\">\n<title>p12</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"141.84\" rx=\"10.8\" ry=\"10.8\" cy=\"-350\"></ellipse>\n<text x=\"141.84\" y=\"-363\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p12</text><text x=\"141.84\" y=\"-346\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z1-&gt;p12 -->\n<g id=\"edge2\" class=\"edge Z1___p12\">\n<title>Z1-&gt;p12</title>\n<path fill=\"none\" stroke=\"black\" d=\"M95.5,-350 L119.12,-350\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"129.12,-350 119.12,-353.5 119.12,-346.5\"></polygon>\n</g>\n<!-- invis_node_Z1_0 -->\n\n<!-- invis_node_Z1_0-&gt;Z1 -->\n\n<!-- invis_node_Z2_0 -->\n\n<!-- p12-&gt;invis_node_Z2_0 -->\n\n<!-- Z2 -->\n<g id=\"node4\" class=\"node transition Z2\">\n<title>Z2</title>\n<polygon fill=\"none\" stroke=\"black\" points=\"226.22,-390 225.5,-390 225.5,-260 226.22,-260 226.22,-390\"></polygon>\n<text x=\"225.5\" y=\"-400\" class=\"transition-name\" text-anchor=\"middle\" font-size=\"10px\">Z2</text><polygon class=\"triangle\" points=\"225.85,-390 218.35,-397.5 233.35,-397.5\"></polygon></g>\n<!-- p23 -->\n<g id=\"node7\" class=\"node place p23\">\n<title>p23</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"273.16\" rx=\"10.8\" ry=\"10.8\" cy=\"-307\"></ellipse>\n<text x=\"273.16\" y=\"-320\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p23</text><text x=\"273.16\" y=\"-303\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z2-&gt;p23 -->\n<g id=\"edge5\" class=\"edge Z2___p23\">\n<title>Z2-&gt;p23</title>\n<path fill=\"none\" stroke=\"black\" d=\"M226.68,-307 L250.41,-307\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"260.40999999999997,-307 250.41,-310.5 250.41,-303.5\"></polygon>\n</g>\n<!-- p24 -->\n<g id=\"node8\" class=\"node place p24\">\n<title>p24</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"273.16\" rx=\"10.8\" ry=\"10.8\" cy=\"-350\"></ellipse>\n<text x=\"273.16\" y=\"-363\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p24</text><text x=\"273.16\" y=\"-346\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z2-&gt;p24 -->\n<g id=\"edge6\" class=\"edge Z2___p24\">\n<title>Z2-&gt;p24</title>\n<path fill=\"none\" stroke=\"black\" d=\"M226.68,-350 L250.41,-350\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"260.40999999999997,-350 250.41,-353.5 250.41,-346.5\"></polygon>\n</g>\n<!-- invis_node_Z2_0 -->\n\n<!-- invis_node_Z2_0-&gt;Z2 -->\n\n<!-- invis_node_Z2_1 -->\n\n<!-- invis_node_Z2_1-&gt;Z2 -->\n\n<!-- invis_node_Z3_0 -->\n\n<!-- p23-&gt;invis_node_Z3_0 -->\n\n<!-- invis_node_Z4_1 -->\n\n<!-- p24-&gt;invis_node_Z4_1 -->\n\n<!-- Z4 -->\n<g id=\"node9\" class=\"node transition Z4\">\n<title>Z4</title>\n<polygon fill=\"none\" stroke=\"black\" points=\"357.82,-390 357.1,-390 357.1,-260 357.82,-260 357.82,-390\"></polygon>\n<text x=\"357.1\" y=\"-400\" class=\"transition-name\" text-anchor=\"middle\" font-size=\"10px\">Z4</text><polygon class=\"triangle\" points=\"357.45000000000005,-390 349.95000000000005,-397.5 364.95000000000005,-397.5\"></polygon></g>\n<!-- p45 -->\n<g id=\"node12\" class=\"node place p45\">\n<title>p45</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"404.76\" rx=\"10.8\" ry=\"10.8\" cy=\"-350\"></ellipse>\n<text x=\"404.76\" y=\"-363\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p45</text><text x=\"404.76\" y=\"-346\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">1</text></g>\n<!-- Z4-&gt;p44 -->\n<g id=\"edge9\" class=\"edge Z4___p44\">\n<title>Z4-&gt;p44</title>\n<path fill=\"none\" stroke=\"black\" d=\"M358.28,-307 L382.01,-307\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"392.01,-307 382.01,-310.5 382.01,-303.5\"></polygon>\n</g>\n<!-- p44 -->\n<g id=\"node13\" class=\"node place p44\">\n<title>p44</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"404.76\" cy=\"-307\" rx=\"10.8\" ry=\"10.8\"></ellipse>\n<text x=\"404.76\" y=\"-320\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p44</text><text x=\"404.76\" y=\"-303\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z4-&gt;p45 -->\n<g id=\"edge10\" class=\"edge Z4___p45\">\n<title>Z4-&gt;p45</title>\n<path fill=\"none\" stroke=\"black\" d=\"M358.28,-350 L382.01,-350\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"392.01,-350 382.01,-353.5 382.01,-346.5\"></polygon>\n</g>\n<!-- invis_node_Z4_0 -->\n\n<!-- invis_node_Z4_0-&gt;Z4 -->\n\n<!-- invis_node_Z4_1-&gt;Z4 -->\n\n<!-- invis_node_Z5_0 -->\n\n<!-- p45-&gt;invis_node_Z5_0 -->\n\n<!-- p44-&gt;invis_node_Z4_0 -->\n\n<!-- Z5 -->\n<g id=\"node14\" class=\"node transition Z5\">\n<title>Z5</title>\n<polygon fill=\"none\" stroke=\"black\" points=\"489.42,-390 488.7,-390 488.7,-318 489.42,-318 489.42,-390\"></polygon>\n<text x=\"488.7\" y=\"-400\" class=\"transition-name\" text-anchor=\"middle\" font-size=\"10px\">Z5</text><polygon class=\"triangle\" points=\"489.05,-390 481.55,-397.5 496.55,-397.5\"></polygon></g>\n<!-- p5fin -->\n<g id=\"node16\" class=\"node place p5fin\">\n<title>p5fin</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"536.36\" rx=\"10.8\" ry=\"10.8\" cy=\"-350\"></ellipse>\n<text x=\"536.36\" y=\"-363\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p5fin</text><text x=\"536.36\" y=\"-346\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z5-&gt;p5fin -->\n<g id=\"edge12\" class=\"edge Z5___p5fin\">\n<title>Z5-&gt;p5fin</title>\n<path fill=\"none\" stroke=\"black\" d=\"M489.88,-350 L513.61,-350\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"523.61,-350 513.61,-353.5 513.61,-346.5\"></polygon>\n</g>\n<!-- invis_node_Z5_0 -->\n\n<!-- invis_node_Z5_0-&gt;Z5 -->\n\n<!-- invis_node_Zfincl_0 -->\n\n<!-- p5fin-&gt;invis_node_Zfincl_0 -->\n\n<!-- Zfincl -->\n<g id=\"node17\" class=\"node transition Zfincl\">\n<title>Zfincl</title>\n<polygon fill=\"none\" stroke=\"black\" points=\"620.6,-390 619.88,-390 619.88,-260 620.6,-260 620.6,-390\"></polygon>\n<text x=\"619.88\" y=\"-400\" class=\"transition-name\" text-anchor=\"middle\" font-size=\"10px\">Zfincl</text><polygon class=\"triangle\" points=\"620.23,-390 612.73,-397.5 627.73,-397.5\"></polygon></g>\n<!-- pfin -->\n<g id=\"node20\" class=\"node place pfin\">\n<title>pfin</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"667.4\" rx=\"10.8\" ry=\"10.8\" cy=\"-350\"></ellipse>\n<text x=\"667.4\" y=\"-363\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">pfin</text><text x=\"667.4\" y=\"-346\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Zfincl-&gt;pfin -->\n<g id=\"edge15\" class=\"edge Zfincl___pfin\">\n<title>Zfincl-&gt;pfin</title>\n<path fill=\"none\" stroke=\"black\" d=\"M621.06,-350 L644.68,-350\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"654.68,-350 644.68,-353.5 644.68,-346.5\"></polygon>\n</g>\n<!-- invis_node_Zfincl_0 -->\n\n<!-- invis_node_Zfincl_0-&gt;Zfincl -->\n\n<!-- invis_node_Zfincl_1 -->\n\n<!-- invis_node_Zfincl_1-&gt;Zfincl -->\n\n<!-- Z3 -->\n<g id=\"node21\" class=\"node transition Z3\">\n<title>Z3</title>\n<polygon fill=\"none\" stroke=\"black\" points=\"357.82,-200 357.1,-200 357.1,-70 357.82,-70 357.82,-200\"></polygon>\n<text x=\"357.1\" y=\"-210\" class=\"transition-name\" text-anchor=\"middle\" font-size=\"10px\">Z3</text><polygon class=\"triangle\" points=\"357.45000000000005,-200 349.95000000000005,-207.5 364.95000000000005,-207.5\"></polygon></g>\n<!-- p3fin -->\n<g id=\"node23\" class=\"node place p3fin\">\n<title>p3fin</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"404.76\" cy=\"-160\" rx=\"10.8\" ry=\"10.8\"></ellipse>\n<text x=\"404.76\" y=\"-173\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p3fin</text><text x=\"404.76\" y=\"-156\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z3-&gt;p3fin -->\n<g id=\"edge17\" class=\"edge Z3___p3fin\">\n<title>Z3-&gt;p3fin</title>\n<path fill=\"none\" stroke=\"black\" d=\"M358.28,-160 L382.01,-160\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"392.01,-160 382.01,-163.5 382.01,-156.5\"></polygon>\n</g>\n<!-- p32 -->\n<g id=\"node24\" class=\"node place p32\">\n<title>p32</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"404.76\" rx=\"10.8\" ry=\"10.8\" cy=\"-113\"></ellipse>\n<text x=\"404.76\" y=\"-126\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">p32</text><text x=\"404.76\" y=\"-109\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">0</text></g>\n<!-- Z3-&gt;p32 -->\n<g id=\"edge18\" class=\"edge Z3___p32\">\n<title>Z3-&gt;p32</title>\n<path fill=\"none\" stroke=\"black\" d=\"M358.28,-113 L382.01,-113\"></path>\n<polygon fill=\"black\" stroke=\"black\" points=\"392.01,-113 382.01,-116.5 382.01,-109.5\"></polygon>\n</g>\n<!-- invis_node_Z3_0 -->\n\n<!-- invis_node_Z3_0-&gt;Z3 -->\n\n<!-- p3fin-&gt;invis_node_Zfincl_1 -->\n\n<!-- p32-&gt;invis_node_Z2_1 -->\n\n<!-- pstart -->\n<g id=\"node25\" class=\"node place pstart\">\n<title>pstart</title>\n<ellipse fill=\"none\" stroke=\"black\" cx=\"10.8\" rx=\"10.8\" ry=\"10.8\" cy=\"-350\"></ellipse>\n<text x=\"10.8\" y=\"-363\" class=\"node-name\" text-anchor=\"middle\" font-size=\"10px\">pstart</text><text x=\"10.8\" y=\"-346\" class=\"node-tokens-count\" text-anchor=\"middle\" font-size=\"10px\">2</text></g>\n<!-- pstart-&gt;invis_node_Z1_0 -->\n\n<g class=\"edge pstart___Z1\"><path d=\"M21.74,-350 L57.4,-350 L82.81,-350\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"92.81,-350 82.81,-353.5 82.81,-346.5\"></polygon></g><g class=\"edge p12___Z2\"><path d=\"M152.78,-350 L188.44,-350 L213.99,-350\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"223.99,-350 213.99,-353.5 213.99,-346.5\"></polygon></g><g class=\"edge p32___Z2\"><path d=\"M404,-103 L404.76,-40 L189,-40 L189,-307 L213.99,-307\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"223.99,-307 213.99,-310.5 213.99,-303.5\"></polygon></g><g class=\"edge p23___Z3\"><path d=\"M273,-295 L273,-160 L355,-160 L347,-160\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"357,-160 347,-163.5 347,-156.5\"></polygon></g><g class=\"edge p24___Z4\"><path d=\"M284.13,-350 L347,-350\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"357,-350 347,-353.5 347,-346.5\"></polygon></g><g class=\"edge p44___Z4\"><path d=\"M404.76,-296 L404.76,-260 L320.46,-260 L320.46,-307 L345.59,-307\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"355.59,-307 345.59,-310.5 345.59,-303.5\"></polygon></g><g class=\"edge p45___Z5\"><path d=\"M415,-350 L451,-350 L477,-350\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"487,-350 477,-353.5 477,-346.5\"></polygon></g><g class=\"edge p3fin___Zfincl\"><path d=\"M415,-160 L488,-160 L488,-307 L609,-307\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"619,-307 609,-310.5 609,-303.5\"></polygon></g><g class=\"edge p5fin___Zfincl\"><path d=\"M547.3,-350 L608,-350\" fill=\"none\" stroke=\"black\"></path><polygon stroke=\"black\" fill=\"black\" points=\"618,-350 608,-353.5 608,-346.5\"></polygon></g></g>\n</svg>"
+}
