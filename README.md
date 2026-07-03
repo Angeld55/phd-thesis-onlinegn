@@ -1,116 +1,103 @@
-% 🇧🇬 Български
+# 🇧🇬 Български
 
-\section*{Дисертационен труд}
+## Дисертационен труд
 
-Дисертационен труд за придобиване на образователната и научна степен \textbf{„доктор“}
+Дисертационен труд за придобиване на образователната и научна степен **„доктор“**
 
-\textbf{Докторант:} Ангел Иванов Димитриев
+**Докторант:** Ангел Иванов Димитриев
 
-\textbf{Секция:} „Биоинформатика и математическо моделиране“
+**Секция:** „Биоинформатика и математическо моделиране“
 
-\textbf{Тема на дисертационния труд:}
+**Тема на дисертационния труд:**  
+**„Софтуерен продукт за реализация на обобщеномрежови модели и негови приложения“**
 
-\textbf{„Софтуерен продукт за реализация на обобщеномрежови модели и негови приложения“}
+**Област на висше образование:** 4. „Природни науки, математика и информатика“
 
-\textbf{Област на висше образование:} 4. „Природни науки, математика и информатика“
+**Професионално направление:** 4.6. „Информатика и компютърни науки“
 
-\textbf{Професионално направление:} 4.6. „Информатика и компютърни науки“
+**Докторска програма:** Информатика
 
-\textbf{Докторска програма:} Информатика
-
-\textbf{Институция:}
-
-Българска академия на науките (БАН)
-
+**Институция:**  
+Българска академия на науките (БАН)  
 Институт по биофизика и биомедицинско инженерство
 
-\textbf{Научни ръководители:}
-
-акад. дмн дтн Красимир Атанасов
-
+**Научни ръководители:**  
+акад. дмн дтн Красимир Атанасов  
 доц. д-р Нора Ангелова
 
-\subsection*{Дати}
+---
 
-\textbf{Предзащита:} 06 март 2026 г.
+### Дати
 
-\textbf{Защита:} 03 юли 2026 г., 13:00 ч.
+**Предзащита:** 06 март 2026 г.
 
-\textbf{Място на защита:} заседателната зала на бл. 105, ул. „Акад. Г. Бончев“, Академичен комплекс „4-ти километър“
+**Защита:** 03 юли 2026 г., 13:00 ч.
 
-\subsection*{Научно жури}
+**Място на защита:** заседателната зала на бл. 105, ул. „Акад. Г. Бончев“, Академичен комплекс „4-ти километър“
 
-\textbf{Председател на научното жури:}
+---
 
+### Научно жури
+
+**Председател на научното жури:**  
 доц. д-р Симеон Рибагин
 
-\textbf{Членове на научното жури / рецензенти и автори на становища:}
-
-проф. д-р Пенчо Маринов
-
-проф. д-р Сотир Сотиров
-
-проф. д-р Таня Пенчева
-
-проф. дн Даниела Орозова
-
+**Членове на научното жури / рецензенти и автори на становища:**  
+проф. д-р Пенчо Маринов  
+проф. д-р Сотир Сотиров  
+проф. д-р Таня Пенчева  
+проф. дн Даниела Орозова  
 доц. д-р Симеон Рибагин
 
+---
 
-% 🇬🇧 English
+# 🇬🇧 English
 
-\section*{PhD Thesis}
+## PhD Thesis
 
-PhD dissertation for obtaining the academic degree \textbf{Doctor (PhD)}
+PhD dissertation for obtaining the academic degree **Doctor (PhD)**
 
-\textbf{PhD Candidate:} Angel Ivanov Dimitriev
+**PhD Candidate:** Angel Ivanov Dimitriev
 
-\textbf{Section:} “Bioinformatics and Mathematical Modelling”
+**Section:** “Bioinformatics and Mathematical Modelling”
 
-\textbf{Thesis topic:}
+**Thesis topic:**  
+**“Software Product for the Realization of Generalized Net Models and Their Applications”**
 
-\textbf{“Software Product for the Realization of Generalized Net Models and Their Applications”}
+**Area of Higher Education:** 4. “Natural Sciences, Mathematics and Informatics”
 
-\textbf{Area of Higher Education:} 4. “Natural Sciences, Mathematics and Informatics”
+**Professional Field:** 4.6. “Informatics and Computer Science”
 
-\textbf{Professional Field:} 4.6. “Informatics and Computer Science”
+**Doctoral Programme:** Informatics
 
-\textbf{Doctoral Programme:} Informatics
-
-\textbf{Institution:}
-
-Bulgarian Academy of Sciences (BAS)
-
+**Institution:**  
+Bulgarian Academy of Sciences (BAS)  
 Institute of Biophysics and Biomedical Engineering
 
-\textbf{Scientific Supervisors:}
-
-Acad. DSc DTechSc Krassimir Atanassov
-
+**Scientific Supervisors:**  
+Acad. DSc DTechSc Krassimir Atanassov  
 Assoc. Prof. Dr. Nora Angelova
 
-\subsection*{Dates}
+---
 
-\textbf{Pre-defense:} 06 March 2026
+### Dates
 
-\textbf{Defense:} 03 July 2026, 13:00
+**Pre-defense:** 06 March 2026
 
-\textbf{Defense venue:} Meeting hall, Block 105, Acad. G. Bonchev St., “4th Kilometer” Academic Complex
+**Defense:** 03 July 2026, 13:00
 
-\subsection*{Scientific Jury}
+**Defense venue:** Meeting hall, Block 105, Acad. G. Bonchev St., “4th Kilometer” Academic Complex
 
-\textbf{Chair of the Scientific Jury:}
+---
 
+### Scientific Jury
+
+**Chair of the Scientific Jury:**  
 Assoc. Prof. Dr. Simeon Ribagin
 
-\textbf{Members of the Scientific Jury / reviewers and statement authors:}
-
-Prof. Dr. Pencho Marinov
-
-Prof. Dr. Sotir Sotirov
-
-Prof. Dr. Tanya Pencheva
-
-Prof. DSc Daniela Orozova
-
+**Members of the Scientific Jury / reviewers and statement authors:**  
+Prof. Dr. Pencho Marinov  
+Prof. Dr. Sotir Sotirov  
+Prof. Dr. Tanya Pencheva  
+Prof. DSc Daniela Orozova  
 Assoc. Prof. Dr. Simeon Ribagin
