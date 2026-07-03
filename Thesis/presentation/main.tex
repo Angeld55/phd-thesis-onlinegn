@@ -66,11 +66,11 @@
 
 
 % --- Заглавни данни ---
-\title[Предзащита на дисертационен труд]{Предзащита на дисертационен труд}
+\title[Защита на дисертационен труд]{Защита на дисертационен труд}
 \subtitle{Задочен докторант Ангел Иванов Димитриев}
 \author{Институт по биофизика и биомедицинско инженерство}
 \institute{ИБФБМИ–БАН \;|\; ФМИ към СУ „Св. Климент Охридски“}
-\date{06.03.2026 г.}
+\date{03.07.2026 г.}
 
 \setbeamertemplate{footline}
 {
@@ -131,6 +131,26 @@
     \end{center}
 \end{frame}
 
+\begin{frame}{Структура на дисертационния труд}
+    \begin{block}{Основни части на дисертационния труд}
+        \vspace{0.15cm}
+
+        \begin{itemize}
+            \setlength{\itemsep}{0.9em}
+
+            \item Увод
+            \item \textbf{Глава 1:} Обобщени мрежи - теоретични основи и софтуер за симулации
+            \item \textbf{Глава 2:} Нововъведени алгоритми за обобщени мрежи
+            \item \textbf{Глава 3:} \textit{OnlineGN}: симулатор за обобщеномрежови модели
+            \item \textbf{Глава 4:} Приложения на обобщените мрежи и симулатора \textit{OnlineGN}
+            \item Заключение
+            \item Научни приноси, публикации и библиография
+        \end{itemize}
+
+        \vspace{0.15cm}
+    \end{block}
+\end{frame}
+
 % ------------------------------------------------------------------
 % --- Слайд 3 - Недостатъци
 \begin{frame}{Анализ на съществуващите софтуерни решения}
@@ -141,7 +161,7 @@
     \column{0.48\textwidth}
       \begin{block}{Неефективен процес на моделиране}
         \small 
-        Ръчна работа при моделиране и визуализация (извън \TeX).
+        Ръчна работа при моделиране                                     и визуализация (извън \TeX).
       \end{block}
 
       \begin{block}{Трудна преносимост}
@@ -218,7 +238,7 @@
           \begin{block}{Задача 2}
         \vbox to 2cm{
           \vspace{0.1cm}
-          \small Разработване и реализиране на алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \textit{TeX} формат за лесно използване в научни публикации.
+          \small Разработване и реализиране на алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \TeX{} формат за лесно използване в научни публикации.
           \vfil
         }
       \end{block}
@@ -331,7 +351,7 @@
 
 % ------------------------------------------------------------------
 % --- Слайд 8 - (Задача 2)
-\begin{frame}{Алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \textit{TeX} формат (Задача 2)}
+\begin{frame}{Алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \TeX{} формат (Задача 2)}
 \begin{center}
 \begin{tikzpicture}[baseline]
     \node (img1) at (-1,0) {\includegraphics[width=0.40\textwidth]{drawing.png}};
@@ -342,7 +362,7 @@
 \end{frame}
 
 % --- Слайд 8.2 - (Задача 2)
-\begin{frame}{Алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \textit{TeX} формат (решение на Задача 2)}
+\begin{frame}{Алгоритъм за преобразуване на \textit{SVG} изображение на обобщена мрежа в \TeX{} формат (решение на Задача 2)}
     \begin{center}
         \begin{minipage}{0.75\textwidth}
             \begin{block}{Основни стъпки в алгоритъма}
@@ -354,7 +374,7 @@
                         \item Нормализация към координатна система на \textit{picture}.
                         \item Уеднаквяване на визуалните параметри.
                         \item Корекция на краищата на ребрата.
-                        \item Създаване на \textit{TeX} изображение.
+                        \item Създаване на \TeX{} изображение.
                     \end{itemize}
                     \vfil
                 }
@@ -403,7 +423,7 @@
 
 % ------------------------------------------------------------------
 % --- Слайд 10 - (Задача 4)
-\begin{frame}{Проектиране на архитектурата на системата \textit{OnlineGN} (Задача 4)}
+\begin{frame}{Проектиране на архитектурата на системата \textit{OnlineGN} и определяне на основните модули (Задача 4)}
     \centering
 
     % Първа секция
@@ -624,7 +644,13 @@
             \item $\rho$-ядро -- съответства на пръстен в задачата.
             \item $\chi$-ядро -- съответства на „ръка“ за преместване на пръстен.
         \end{itemize}
-        \vspace{0.8cm}
+
+        \vspace{-0.2cm}
+        \[
+            \text{Брой стъпки} = 2^{\bigl\lceil \textstyle \frac{n}{k} \bigr\rceil} - 1
+        \]
+
+        \vspace{0.5cm}
         ОМ за Ханойските кули с $n=3$ $\rho$-ядра и $k=2$ $\chi$-ядра
         \vspace{0.5cm}
         \column{0.65\textwidth}
@@ -820,33 +846,119 @@
 
 % ------------------------------------------------------------------
 % --- Слайд 30
+\begin{frame}{Научни приноси}
+\scriptsize
+\begin{enumerate}
+    \setlength{\itemsep}{0.8em}
+
+    \item \textbf{Алгоритми за автоматизация и визуализация на ОМ}
+    \begin{itemize}
+        \item Алгоритъм за автоматизирано изчертаване на ОМ по абстрактно описание.
+        \item Алгоритъм за преобразуване на SVG изображения на ОМ в \TeX{} формат.
+    \end{itemize}
+
+    \item \textbf{Паралелен вариант на задачата за Ханойските кули}
+    \begin{itemize}
+        \item Формализиран е вариант с едновременно преместване на до $k$ пръстена.
+        \item Доказана е теорема за минималния брой стъпки:
+        \[
+            H(n,k) = 2^{\bigl\lceil \textstyle \frac{n}{k} \bigr\rceil} - 1
+        \]
+    \end{itemize}
+
+    \item \textbf{ОМ моделиране и симулация на паралелната задача}
+    \begin{itemize}
+        \item Създаден е оригинален ОМ модел с $\rho$-ядра за обектите и $\chi$-ядра за ресурсите.
+        \item Приложимостта е доказана чрез симулации в \textit{OnlineGN}.
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+% ------------------------------------------------------------------
+% --- Слайд 31
+\begin{frame}{Научно--приложни приноси}
+\scriptsize
+\begin{enumerate}
+    \setlength{\itemsep}{0.8em}
+
+    \item \textbf{Софтуерна система \textit{OnlineGN}}
+    \begin{itemize}
+        \item Реализирана е уеб базирана платформа за моделиране, симулация и визуализация на ОМ.
+        \item Разработен е интерактивен интерфейс за редактиране и проследяване на изпълнението.
+        \item Внедрен е експорт от SVG към \TeX{} за подготовка на публикации.
+    \end{itemize}
+
+    \item \textbf{Представяне на крайни автомати чрез ОМ}
+    \begin{itemize}
+        \item Разработена е методика за описание на детерминирани и недетерминирани крайни автомати чрез ОМ.
+    \end{itemize}
+
+    \item \textbf{Моделиране на процеси в нефтопреработвателна рафинерия}
+    \begin{itemize}
+        \item Разработени са ОМ модели на реални технологични процеси за газови, полимерни и тежки нефтени продукти.
+    \end{itemize}
+
+    \item \textbf{Верификация чрез \textit{OnlineGN}}
+    \begin{itemize}
+        \item Всички новосъздадени модели са верифицирани чрез симулации в \textit{OnlineGN}.
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+
+% ------------------------------------------------------------------
+% --- Слайд 30
 \begin{frame}{Публикации}
-\footnotesize 
+\scriptsize
 \begin{itemize}
-    \setlength{\itemsep}{8pt}
+    \setlength{\itemsep}{1.5em}
 
-    \item Dimitriev, A.; Terziev, G. \textbf{Automating Creativity: Enhancing Generalized Nets with Algorithmic Drawing.} \textit{Proc. of 22nd Int. Workshop on IFS and GN}, Warsaw, 2024 (in press).
+    \item Dimitriev, A.I.; Terziev, G.I. \textbf{Automating Creativity: Enhancing Generalized Nets with Algorithmic Drawing.} In: Atanassov, K.T., et al. (eds.) \textit{Uncertainty and Imprecision in Decision Making and Decision Support -- New Advances, Challenges, and Perspectives}. IWIFSGN 2024. \textit{Lecture Notes in Networks and Systems}, vol. 1857. Springer, Cham, 2026, pp. 62--75. doi:\,10.1007/978-3-032-22232-9\_7.
 
-    \item Dimitriev, A. \textbf{Representing Finite-State Automata with Generalized Nets: Simulation via OnlineGN.} \textit{Proc. of the Jangjeon Mathematical Society}, vol. 29, no. 1, 2026.
+    \item Dimitriev, A. \textbf{Representing Finite-State Automata with Generalized Nets: Simulation via OnlineGN.} \textit{Proceedings of the Jangjeon Mathematical Society}, vol. 29, no. 1, 2026, pp. 155--167. doi:\,10.17777/pjms.2026.29.1.011.
 
-    \item Dimitriev, A.; Atanassov, K.; Angelova, N. \textbf{Parallel Towers of Hanoi via Generalized Nets: Simulated with OnlineGN.} \textit{Software}, vol. 4, no. 4 (2025).
+    \item Dimitriev, A.; Atanassov, K.; Angelova, N. \textbf{Parallel Towers of Hanoi via Generalized Nets: Simulated with OnlineGN.} \textit{Software}, vol. 4, no. 4, article 23, 2025. doi:\,10.3390/software4040023.
 
-    \item Stratiev, D. D.; Dimitriev, A. et al. \textbf{Modeling the Production Process of Fuel Gas, LPG, Propylene, and Polypropylene...} \textit{Mathematics} \textbf{2023}, 11(18), 3800.
+    \item Stratiev, D.D.; Dimitriev, A.; Stratiev, D.; Atanassov, K. \textbf{Modeling the Production Process of Fuel Gas, LPG, Propylene, and Polypropylene in a Petroleum Refinery Using Generalized Nets.} \textit{Mathematics}, vol. 11, no. 17, article 3800, 2023. doi:\,10.3390/math11173800.
 
-    \item Stratiev, D. D.; Dimitriev, A. et al. \textbf{Generalized Net Model of Heavy Oil Products' Manufacturing...} \textit{Mathematics} \textbf{2023}, 11(22), 4753.
+    \item Stratiev, D.; Dimitriev, A.; Stratiev, D.; Atanassov, K. \textbf{Generalized Net Model of Heavy Oil Products' Manufacturing in Petroleum Refinery.} \textit{Mathematics}, vol. 11, no. 23, article 4753, 2023. doi:\,10.3390/math11234753.
 \end{itemize}
 \end{frame}
 
 % ------------------------------------------------------------------
 % --- Слайд 31 - ДОПЪЛНЕН
-\begin{frame}{Участие в научни конференции}
+\begin{frame}{Участия в научни конференции}
+\scriptsize
+
+\begin{block}{Участия, свързани с дисертационния труд}
 \begin{itemize}
-    \setlength{\itemsep}{1.5em} 
-    
-    \item Доклад на „Twenty Second International Workshop on Intuitionistic Fuzzy Sets and Generalized Nets“ --- 18.10.2024.
-    
-    \item Доклад за представяне на симулатор за обобщени мрежи пред ИБФБМИ --- 04.2024.
+    \setlength{\itemsep}{0.7em}
+
+    \item \textbf{22nd International Workshop on Intuitionistic Fuzzy Sets and Generalized Nets}
+    (IWIFSGN'2024), Варшава, Полша -- 18.10.2024.
+
+    Доклад: \textit{Automating Creativity: Enhancing Generalized Nets with Algorithmic Drawing}.
+
+    \item \textbf{ИБФБМИ}, София, България -- 04.2024. Доклад: \textit{Представяне на OnlineGn}.
+
+    \item \textbf{ИБФБМИ}, София, България -- 03.2025. Доклад: \textit{Представяне на OnlineGn}.
 \end{itemize}
+\end{block}
+
+\vspace{0.3em}
+
+\begin{block}{Друго научно участие}
+\begin{itemize}
+    \setlength{\itemsep}{0.5em}
+
+    \item \textbf{International Symposium on Bioinformatics and Biomedicine}
+    (BioInfoMed'2022), Бургас, България -- 05-07.10.2022.
+
+    Доклади: \textit{ABO System Blood Groups Distribution in Bulgaria} и
+    \textit{InterCriteria Analysis of the Geographic Distribution of the ABO System Blood Groups}.
+\end{itemize}
+\end{block}
+
 \end{frame}
 
 \end{document}
