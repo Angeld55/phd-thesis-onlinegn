@@ -9,8 +9,6 @@
 **Тема на дисертационния труд:**  
 **„Софтуерен продукт за реализация на обобщеномрежови модели и негови приложения“**
 
-**Област на висше образование:** 4. „Природни науки, математика и информатика“
-
 **Професионално направление:** 4.6. „Информатика и компютърни науки“
 
 **Докторска програма:** Информатика
@@ -53,12 +51,10 @@
 
 PhD dissertation for obtaining the academic degree **Doctor (PhD)**
 
-**PhD Candidate:** Angel Ivanov Dimitriev
+**PhD Candidate:** Angel Dimitriev
 
 **Thesis topic:**  
 **“Software Product for the Realization of Generalized Net Models and Their Applications”**
-
-**Area of Higher Education:** 4. “Natural Sciences, Mathematics and Informatics”
 
 **Professional Field:** 4.6. “Informatics and Computer Science”
 
