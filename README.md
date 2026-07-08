@@ -6,8 +6,6 @@
 
 **Докторант:** Ангел Димитриев
 
-**Секция:** „Биоинформатика и математическо моделиране“
-
 **Тема на дисертационния труд:**  
 **„Софтуерен продукт за реализация на обобщеномрежови модели и негови приложения“**
 
@@ -56,8 +54,6 @@
 PhD dissertation for obtaining the academic degree **Doctor (PhD)**
 
 **PhD Candidate:** Angel Ivanov Dimitriev
-
-**Section:** “Bioinformatics and Mathematical Modelling”
 
 **Thesis topic:**  
 **“Software Product for the Realization of Generalized Net Models and Their Applications”**
