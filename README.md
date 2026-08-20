@@ -29,7 +29,7 @@
 
 **Защита:** 03 юли 2026 г.
 
----
+**Рецензии:** https://biomed.bas.bg/bg/procedures/angel-dimitriev-phd/---
 
 ### Научно жури
 
@@ -89,3 +89,5 @@ Prof. Dr. Sotir Sotirov
 Prof. Dr. Tanya Pencheva  
 Prof. DSc Daniela Orozova  
 Assoc. Prof. Dr. Simeon Ribagin
+
+**Reviews:** https://biomed.bas.bg/bg/procedures/angel-dimitriev-phd/
