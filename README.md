@@ -29,7 +29,7 @@
 
 **Защита:** 03 юли 2026 г.
 
-**Рецензии:** https://biomed.bas.bg/bg/procedures/angel-dimitriev-phd/---
+**Рецензии:** https://biomed.bas.bg/bg/procedures/angel-dimitriev-phd/
 
 ### Научно жури
 
