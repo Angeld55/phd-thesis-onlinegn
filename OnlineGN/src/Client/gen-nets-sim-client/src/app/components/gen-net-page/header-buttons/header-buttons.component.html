@@ -1,109 +1,115 @@
 <div class="buttons-container">
   <div class="buttons-section">
-    <label>Simulation: </label>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="makeStep.emit()"
-      [disabled]="!hasGenNet"
-    >
-      Make a step
-    </button>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="fullSimulation.emit()"
-      [disabled]="!hasGenNet"
-    >
-      Full simulation
-    </button>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="resetSimulation.emit()"
-      [disabled]="!hasGenNet"
-    >
-      Reset
-    </button>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="editPositions.emit()"
-      [disabled]="!hasGenNet"
-    >
-      Edit positions
-    </button>
+    <label>Simulation</label>
+    <div class="buttons-row">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="makeStep.emit()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>skip_next</mat-icon>
+        Make a step
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="fullSimulation.emit()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>play_arrow</mat-icon>
+        Full simulation
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="resetSimulation.emit()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>restart_alt</mat-icon>
+        Reset
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="editPositions.emit()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>open_with</mat-icon>
+        Edit positions
+      </button>
+    </div>
   </div>
   <div class="buttons-section">
-    <label>State: </label>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="showAllTokens()"
-      [disabled]="!hasGenNet"
-    >
-      Show all tokens
-    </button>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="openSettings()"
-      [disabled]="!hasGenNet"
-    >
-      Settings
-    </button>
-
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="openStepLogs()"
-      [disabled]="!hasGenNet"
-    >
-      Step logs
-    </button>
+    <label>State</label>
+    <div class="buttons-row">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="showAllTokens()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>scatter_plot</mat-icon>
+        Show all tokens
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openSettings()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>tune</mat-icon>
+        Settings
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openStepLogs()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>receipt_long</mat-icon>
+        Step logs
+      </button>
+    </div>
   </div>
   <div class="buttons-section">
-    <label>Save: </label>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="openSaveToServerDialog()"
-      [disabled]="!hasGenNet"
-    >
-      Save to server
-    </button>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="exportToTex()"
-      [disabled]="!hasGenNet"
-    >
-      Export to tex
-    </button>
-    <button
-      mat-button
-      mat-flat-button
-      color="primary"
-      (click)="exportToFile()"
-      [disabled]="!hasGenNet"
-    >
-      Export to file
-    </button>
-    <button type="button" mat-raised-button (click)="fileInput.click()">
-      Import
-    </button>
-    <input hidden (change)="onFileSelected($event)" #fileInput type="file" />
-    <span class="file-name">
-      Currently imported file: {{ selectedFile?.name ?? 'none' }}
+    <label>Save</label>
+    <div class="buttons-row">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openSaveToServerDialog()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>cloud_upload</mat-icon>
+        Save to server
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="exportToTex()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>functions</mat-icon>
+        Export to tex
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="exportToFile()"
+        [disabled]="!hasGenNet"
+      >
+        <mat-icon>download</mat-icon>
+        Export to file
+      </button>
+      <button type="button" mat-flat-button color="accent" (click)="fileInput.click()">
+        <mat-icon>upload_file</mat-icon>
+        Import
+      </button>
+      <input hidden (change)="onFileSelected($event)" #fileInput type="file" />
+    </div>
+    <span class="file-name" [title]="selectedFile?.name ?? 'none'">
+      Imported file: <strong>{{ selectedFile?.name ?? 'none' }}</strong>
     </span>
   </div>
 </div>

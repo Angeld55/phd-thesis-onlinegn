@@ -472,7 +472,10 @@ export class GenNetPageComponent extends BaseComponent {
   }
 
   // Splitter Logic
-  protected leftPanelWidth: number = 800; // Initial width
+  protected leftPanelWidth: number = Math.max(
+    320,
+    Math.round(window.innerWidth * 0.62),
+  );
   private isDraggingSplitter: boolean = false;
 
   protected onMouseDown() {

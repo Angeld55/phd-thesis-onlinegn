@@ -1,33 +1,45 @@
 <div class="page-container">
   <!-- Header / Toolbar Section -->
   <header class="app-header card">
-    <div class="header-content">
-      <h1 class="app-title">GenNets Simulator</h1>
-      <header-buttons
-        [genNetRaw]="genNetRaw"
-        [codeCompilerService]="codeCompilerService"
-        [settings]="settings"
-        (genNetImported)="initialize($event)"
-        (makeStep)="makeStep()"
-        (fullSimulation)="fullSimulation()"
-        (resetSimulation)="resetSimulation()"
-        (editPositions)="editPositions()"
-      ></header-buttons>
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <mat-icon>hub</mat-icon>
+      </div>
+      <div class="brand-text">
+        <h1 class="app-title">OnlineGn</h1>
+        <span class="app-subtitle">Generalized Nets Simulator</span>
+      </div>
     </div>
+    <header-buttons
+      class="toolbar"
+      [genNetRaw]="genNetRaw"
+      [codeCompilerService]="codeCompilerService"
+      [settings]="settings"
+      (genNetImported)="initialize($event)"
+      (makeStep)="makeStep()"
+      (fullSimulation)="fullSimulation()"
+      (resetSimulation)="resetSimulation()"
+      (editPositions)="editPositions()"
+    ></header-buttons>
   </header>
 
   <!-- Main Content Flex Layout -->
-  <main class="main-content" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()">
+  <main class="main-content" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()" (mouseleave)="onMouseUp()">
     <!-- Left Column: Simulation View -->
     <section class="simulation-section card" [style.width.px]="leftPanelWidth">
       <div class="section-header">
-        <h2>Simulation View</h2>
-        <span class="step-badge">Step: {{ currentStep }}</span>
+        <h2><mat-icon>account_tree</mat-icon>Simulation View</h2>
+        <span class="step-badge">Step {{ currentStep }}</span>
       </div>
-      
+
       <div class="simulation-container">
         <div id="d3-container" class="d3-canvas"></div>
-        
+
+        <div class="empty-state" *ngIf="!genNetRaw">
+          <mat-icon>upload_file</mat-icon>
+          <span>Import a generalized net to start the simulation</span>
+        </div>
+
         <div class="position-changer-overlay" *ngIf="showPositionChanger">
           <position-changer [graphEngine]="graphEngine"></position-changer>
         </div>
@@ -38,15 +50,34 @@
     <div class="splitter" (mousedown)="onMouseDown()"></div>
 
     <!-- Right Column: Controls & Functions -->
-    <aside class="controls-section" [style.flex]="'1'">
+    <aside class="controls-section">
       <div class="card functions-card">
-        <h2>Global Functions</h2>
+        <div class="section-header">
+          <h2><mat-icon>code</mat-icon>Global Functions</h2>
+        </div>
         <global-functions-form
           [codeCompilerService]="codeCompilerService!"
         ></global-functions-form>
       </div>
     </aside>
   </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <span class="owner">
+      Owned and supported by <strong>Angel Dimitriev</strong>
+    </span>
+    <a
+      class="institute"
+      href="https://biomed.bas.bg/"
+      target="_blank"
+      rel="noopener"
+      title="Институт по биофизика и биомедицинско инженерство – БАН"
+    >
+      <img src="assets/ban_logo.png" alt="ИБФБМИ – БАН logo" />
+      <span>Институт по биофизика и биомедицинско инженерство – БАН</span>
+    </a>
+  </footer>
 
   <!-- Floating Tooltip -->
   <tooltip-predicate-matrix-view
