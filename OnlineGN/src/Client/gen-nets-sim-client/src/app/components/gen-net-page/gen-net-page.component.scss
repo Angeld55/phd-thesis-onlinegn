@@ -24,14 +24,39 @@
 }
 
 .brand-mark {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: var(--gradient-brand);
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(63, 81, 181, 0.96), rgba(14, 165, 198, 0.96));
   color: #fff;
-  box-shadow: 0 6px 16px -6px rgba(63, 81, 181, 0.6);
+  box-shadow: 0 12px 26px -14px rgba(63, 81, 181, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 55%);
+  }
+
+  &:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 16px 30px -14px rgba(63, 81, 181, 0.88), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  }
+
+  mat-icon {
+    position: relative;
+    z-index: 1;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    filter: drop-shadow(0 2px 10px rgba(15, 23, 42, 0.22));
+  }
 }
 
 .brand-text {
@@ -129,16 +154,34 @@
   flex: 1;
   min-height: 0;
   border-radius: var(--border-radius-sm);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(63, 81, 181, 0.12);
   overflow: hidden;
-  background-color: var(--color-bg-muted);
-  background-image: radial-gradient(rgba(31, 35, 51, 0.09) 1px, transparent 1px);
+  background:
+    radial-gradient(circle at top left, rgba(63, 81, 181, 0.08), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(14, 165, 198, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(248, 250, 255, 0.96), rgba(240, 244, 255, 0.95));
+  background-size: auto, auto, auto;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.simulation-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(59, 65, 110, 0.12) 1.2px, transparent 1.2px);
   background-size: 18px 18px;
+  mask-image: radial-gradient(circle at center, black 52%, transparent 100%);
 }
 
 .d3-canvas {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
+
+  svg {
+    background: transparent !important;
+  }
 }
 
 .empty-state {
