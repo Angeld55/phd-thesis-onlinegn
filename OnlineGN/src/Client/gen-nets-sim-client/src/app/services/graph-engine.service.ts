@@ -60,7 +60,8 @@ export class GraphEngineService {
   ) {
     this.svg = d3.select(this.selector).select('svg');
     this.svg.attr('width', '100%').attr('height', '100%');
-    this.svg.attr('style', 'border: none;');
+    this.svg.attr('style', 'border: none; background: transparent;');
+    this.svg.selectAll('rect').attr('fill', 'transparent').attr('stroke', 'none');
     if (placeIdToTransitionId) {
       this.cleanInvisibleNodes(placeIdToTransitionId);
     }
