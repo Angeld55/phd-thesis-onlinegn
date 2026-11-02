@@ -20,7 +20,7 @@ import { SettingsDialogComponent } from './components/dialogs/settings-dialog/se
 import { HeaderButtonsComponent } from './components/gen-net-page/header-buttons/header-buttons.component';
 import { ToastrModule } from 'ngx-toastr';
 import { PositionChangerComponent } from './components/position-changer/position-changer.component';
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { PredicateMatrixViewComponent } from './components/predicate-matrix-view/predicate-matrix-view.component';
 import { MatTableModule } from '@angular/material/table';
@@ -65,6 +65,7 @@ import { SaveToServerDialogComponent } from './components/dialogs/save-to-server
     MatSelectModule,
     MatIconModule,
     CdkDrag,
+    CdkDragHandle,
     CdkDropList,
     ToastrModule.forRoot(),
     MatTableModule,
