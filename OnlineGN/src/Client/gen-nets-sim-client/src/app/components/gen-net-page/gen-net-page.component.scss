@@ -179,8 +179,13 @@
   width: 100%;
   height: 100%;
 
-  svg {
+  ::ng-deep svg {
     background: transparent !important;
+
+    g.graph > polygon {
+      fill: transparent;
+      stroke: none;
+    }
   }
 }
 
@@ -215,7 +220,12 @@
   position: absolute;
   top: 12px;
   right: 12px;
+  // must be above .d3-canvas (z-index: 1), otherwise the fields are
+  // rendered behind the net and cannot be clicked
+  z-index: 10;
   max-width: calc(100% - 24px);
+  max-height: calc(100% - 24px);
+  overflow-y: auto;
   padding: 10px;
   border-radius: var(--border-radius-sm);
   background: rgba(255, 255, 255, 0.92);
