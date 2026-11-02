@@ -104,6 +104,7 @@ export class GenNetPageComponent extends BaseComponent {
   }
 
   public initialize(model: GenNetExportModel) {
+    this.showPositionChanger = false;
     this.stepLoggerService.clear();
     this.executedMovesTracker.resetCounter();
     this.initEngine(model, () => {
@@ -488,11 +489,11 @@ export class GenNetPageComponent extends BaseComponent {
     }
     // Prevent text selection while dragging
     event.preventDefault();
-    
+
     // Calculate new width based on mouse position
-    // We can adjust this logic if the layout is more complex, 
+    // We can adjust this logic if the layout is more complex,
     // but for a simple left-to-right split, clientX works well.
-    // We might need to subtract the sidebar offset if there was one, 
+    // We might need to subtract the sidebar offset if there was one,
     // but here the main content starts at the left edge (mostly).
     // A minimum width check is good practice.
     const newWidth = event.clientX - 20; // -20 for padding/margin adjustments if needed
